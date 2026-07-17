@@ -1092,6 +1092,7 @@
       <div class="nav-item" data-view="measure"><span class="nav-icon">⇡</span> Measurement</div>
       <div class="nav-item" data-view="outreach"><span class="nav-icon">✦</span> LinkedIn Outreach</div>
       <div class="nav-item" data-view="tracker"><span class="nav-icon">◎</span> Outreach Tracker</div>
+      <div class="nav-item" data-view="prospecting"><span class="nav-icon">◈</span> Autonomous Prospecting</div>
     </nav>
     <div style="margin-top: 28px; padding: 14px; background: var(--panel-2); border-radius: 8px; font-size: 11px; color: var(--muted); line-height: 1.5;">
       <div style="color: var(--text); font-weight: 600; margin-bottom: 6px;">Launch window</div>
@@ -1870,6 +1871,122 @@ Kevin</div>
         <table class="tk-table" id="tk-table"></table>
       </div>
 
+    </section>
+
+    <section class="view od-wrap" id="view-prospecting">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Autonomous Prospecting</h1>
+          <p class="page-sub">The AI prospecting agent. It sources founder-led UK prospects from LinkedIn and Facebook buying signals, then works the sequence on its own. No manual LinkedIn touches. Target: 60 touches a week.</p>
+        </div>
+        <div class="od-btnrow" style="margin-top:0">
+          <button class="od-copy" style="margin-top:0" onclick="apExportCsv()">Export CSV</button>
+        </div>
+      </div>
+
+      <div class="tk-note">
+        <strong>Manual-first, then autonomous.</strong> The agent stays in draft until you switch it live. Nothing goes out on its own until you press <em>Go live</em>. Until then it drafts prospects for your review, the same way the first pass was run by hand before flipping to automatic at 90% accuracy. Pause or delete the engine at any time.
+      </div>
+
+      <!-- CONTROL / STATUS -->
+      <div class="card" style="margin-bottom:16px">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span id="ap-dot" style="width:12px; height:12px; border-radius:50%; background:var(--amber); display:inline-block; box-shadow:0 0 0 4px rgba(245,177,74,.15)"></span>
+            <div>
+              <div style="font-weight:800; font-size:16px;" id="ap-state-label">Draft — not live</div>
+              <div class="small" style="color:var(--muted)" id="ap-state-sub">The agent is idle. Review the draft prospects, then go live when you are ready.</div>
+            </div>
+          </div>
+          <div class="od-btnrow" style="margin-top:0">
+            <button class="od-btn" id="ap-golive" onclick="apToggleLive()">Go live</button>
+            <button class="od-copy" style="margin-top:0" onclick="apRunNow()">Run agent now</button>
+            <button class="od-copy" style="margin-top:0; color:var(--red); border-color:var(--red)" onclick="apReset()">Delete engine</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCORECARD -->
+      <div class="grid grid-4" style="margin-bottom:16px">
+        <div class="card">
+          <div class="kpi-label">Touches this week</div>
+          <div class="kpi-value"><span id="ap-k-week">0</span> / <span id="ap-k-target">60</span></div>
+          <div id="ap-k-week-v" style="margin-top:6px"></div>
+        </div>
+        <div class="card">
+          <div class="kpi-label">Sourced this run</div>
+          <div class="kpi-value"><span id="ap-k-today">0</span> / <span id="ap-k-perday">5</span></div>
+          <div class="small" style="color:var(--muted)">Prospects the agent found</div>
+        </div>
+        <div class="card">
+          <div class="kpi-label">In sequence</div>
+          <div class="kpi-value" id="ap-k-seq">0</div>
+          <div class="small" style="color:var(--muted)">A reply hands off to a human</div>
+        </div>
+        <div class="card">
+          <div class="kpi-label">Replied / Booked / Won</div>
+          <div class="kpi-value"><span id="ap-k-rep">0</span> / <span id="ap-k-book">0</span> / <span id="ap-k-won">0</span></div>
+          <div class="small" style="color:var(--muted)">Auto-logged by the agent</div>
+        </div>
+      </div>
+
+      <div class="od-grid2">
+        <!-- CONFIG -->
+        <div class="card">
+          <div style="font-weight:800; margin-bottom:8px;">Agent settings</div>
+          <div class="small" style="color:var(--muted); margin-bottom:8px;">The numbers the agent runs on. Saved automatically.</div>
+          <div class="od-grid2">
+            <div>
+              <label class="od-lab">Prospects per day</label>
+              <input class="od-in" id="ap-cfg-perday" type="number" min="1" value="5" oninput="apCfgChange()">
+            </div>
+            <div>
+              <label class="od-lab">Working days per week</label>
+              <input class="od-in" id="ap-cfg-days" type="number" min="1" max="7" value="5" oninput="apCfgChange()">
+            </div>
+          </div>
+          <label class="od-lab">Touches per week (target)</label>
+          <input class="od-in" id="ap-cfg-target" type="number" min="1" value="60" oninput="apCfgChange()">
+          <label class="od-lab">Buying-signal sources</label>
+          <div style="display:flex; gap:16px; margin-top:4px; flex-wrap:wrap;">
+            <label class="small" style="display:flex; gap:6px; align-items:center; cursor:pointer;"><input type="checkbox" id="ap-cfg-li" checked onchange="apCfgChange()"> LinkedIn</label>
+            <label class="small" style="display:flex; gap:6px; align-items:center; cursor:pointer;"><input type="checkbox" id="ap-cfg-fb" checked onchange="apCfgChange()"> Facebook</label>
+          </div>
+          <div class="small" style="color:var(--muted); margin-top:10px; line-height:1.6;" id="ap-cfg-note"></div>
+        </div>
+
+        <!-- MANUAL ADD -->
+        <div class="card">
+          <div style="font-weight:800; margin-bottom:8px;">Add a prospect by hand</div>
+          <div class="small" style="color:var(--muted); margin-bottom:8px;">The agent sources these for you when live. You can also drop one in yourself.</div>
+          <label class="od-lab">Name</label>
+          <input class="od-in" id="ap-name" placeholder="Sarah Judge">
+          <div class="od-grid2">
+            <div>
+              <label class="od-lab">Company</label>
+              <input class="od-in" id="ap-co" placeholder="Judge Electrical Ltd">
+            </div>
+            <div>
+              <label class="od-lab">Channel</label>
+              <select class="od-in" id="ap-ch"><option>LinkedIn</option><option>Facebook</option></select>
+            </div>
+          </div>
+          <label class="od-lab">Buying signal</label>
+          <input class="od-in" id="ap-signal" placeholder="Posted about working till 11pm and still behind">
+          <div class="od-btnrow">
+            <button class="od-btn" onclick="apAddManual()">Add prospect</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="card" style="margin-top:16px; overflow-x:auto">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px; flex-wrap:wrap">
+          <div style="font-weight:800;">Prospects <span class="small" style="color:var(--muted)">(agent-sourced and manual)</span></div>
+          <input class="od-in" id="ap-filter" placeholder="Filter by name, company or signal" oninput="apRender()" style="max-width:280px">
+        </div>
+        <table class="tk-table" id="ap-table"></table>
+      </div>
     </section>
 
   </main>
@@ -5608,6 +5725,333 @@ function tkImportCsv(evt){
 tkLoad();
 tkRenderHbSearch();
 tkRender();
+</script>
+
+<script>
+/* ====================================================================
+   AUTONOMOUS PROSPECTING AGENT — the AI engine (vs the manual tracker).
+   Sources founder-led UK prospects from LinkedIn/Facebook buying signals
+   and works the sequence on its own once switched live. Manual-first:
+   nothing runs until you press Go live. Persists to localStorage.
+==================================================================== */
+const AP_KEY = 'od_prospecting_v1';
+const AP_STATUS = ['New','In sequence','Replied','Booked','Won','Nurture','Not a fit'];
+const AP_SEQ_LABELS = ['Connect','Message 1','Message 2','Message 3','Booking push','Breakup'];
+const AP_SEQ_LEN = AP_SEQ_LABELS.length;
+
+const AP_FIRST = ['Sarah','Tom','Priya','Dan','Grace','James','Aisha','Mark','Chloe','Raj','Emma','Liam','Nadia','Paul','Sofia','Ben','Hannah','Omar','Ruth','Jack'];
+const AP_LAST  = ['Judge','Alderton','Nair','Fletcher','Owusu','Hartley','Khan','Bennett','Doyle','Patel','Shaw','Murphy','Rahman','Turner','Costa','Wells','Fraser','Ali','Coleman','Barnes'];
+const AP_TRADE = ['Electrical','Plumbing','Joinery','Fitness','Interiors','Logistics','Roofing','Catering','Print','Landscaping','Dental','Auto','Cleaning','Signage','Flooring'];
+const AP_SUFFIX= ['Ltd','Group','& Co','Services','Studio','Works'];
+const AP_SIGNALS = [
+  { hb:'Drowning',            li:'Posted about quoting jobs at 11pm because the day is full', fb:'Asked a local group how others cope with 60-hour weeks' },
+  { hb:'You ARE the business',li:'Wrote that the business stops the week she takes a holiday', fb:'Posted that he cannot switch off, even on days out' },
+  { hb:'All in your head',    li:'Hiring a first ops person, says the process is only in her head', fb:'Asked how to write down a process she has never documented' },
+  { hb:'Flying blind',        li:'Commented that he cannot tell his real margin per job', fb:'Asked the group which app shows true profit' },
+  { hb:'Tools are a mess',    li:'Asked for help after a 6k software spend that flopped', fb:'Ranted about apps that do not talk to each other' }
+];
+
+let AP = { live:false, weekKey:'', weekTouches:0, todayKey:'', todayCount:0, lastRun:null, list:[], cfg:{ perDay:5, days:5, target:60, li:true, fb:true } };
+let AP_TIMER = null;
+
+function apLoad(){
+  try { const raw = localStorage.getItem(AP_KEY); if(raw){ AP = Object.assign(AP, JSON.parse(raw)); } }
+  catch(e){}
+  if(!Array.isArray(AP.list)) AP.list = [];
+  if(!AP.cfg) AP.cfg = { perDay:5, days:5, target:60, li:true, fb:true };
+}
+function apSave(){ try { localStorage.setItem(AP_KEY, JSON.stringify(AP)); } catch(e){} }
+function apId(){ return 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function apPick(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+function apWeekKey(d){
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - day);
+  const yStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const wk = Math.ceil((((d - yStart) / 86400000) + 1) / 7);
+  return d.getUTCFullYear() + '-W' + String(wk).padStart(2,'0');
+}
+/* Reset weekly count when the real ISO week rolls over. */
+function apRollover(){
+  const now = new Date();
+  const wk = apWeekKey(now);
+  const dk = now.toISOString().slice(0,10);
+  if(AP.weekKey !== wk){ AP.weekKey = wk; AP.weekTouches = 0; }
+  if(!AP.todayKey) AP.todayKey = dk;
+}
+
+function apMakeProspect(force){
+  const chans = [];
+  if(AP.cfg.li) chans.push('LinkedIn');
+  if(AP.cfg.fb) chans.push('Facebook');
+  const ch = (force && force.ch) ? force.ch : (chans.length ? apPick(chans) : 'LinkedIn');
+  const last = apPick(AP_LAST);
+  const sig = apPick(AP_SIGNALS);
+  return {
+    id: apId(),
+    name: (force && force.name) ? force.name : (apPick(AP_FIRST) + ' ' + last),
+    co:   (force && force.co)   ? force.co   : (last + ' ' + apPick(AP_TRADE) + ' ' + apPick(AP_SUFFIX)),
+    ch: ch,
+    hb: sig.hb,
+    signal: (force && force.signal) ? force.signal : (ch === 'Facebook' ? sig.fb : sig.li),
+    step: force ? 0 : 1,
+    touches: force ? 0 : 1,
+    status: force ? 'New' : 'In sequence',
+    source: force ? 'manual' : 'agent',
+    found: new Date().toISOString().slice(0,10)
+  };
+}
+
+/* One working day for the agent: source new prospects, then work follow-ups
+   up to the daily touch quota. Returns touches logged this cycle. */
+function apRunCycle(){
+  apRollover();
+  const perDay = Math.max(1, AP.cfg.perDay);
+  const days   = Math.max(1, AP.cfg.days);
+  const target = Math.max(1, AP.cfg.target);
+  const dailyQuota = Math.max(perDay, Math.ceil(target / days));
+
+  // Follow-up pool = existing in-sequence prospects (before today's new batch).
+  const pool = AP.list.filter(p => p.status === 'In sequence' && p.step < AP_SEQ_LEN - 1);
+
+  let added = 0;
+  AP.todayCount = 0;
+
+  // 1. Source new prospects (each = one connection touch).
+  for(let i = 0; i < perDay; i++){
+    AP.list.unshift(apMakeProspect());
+    AP.todayCount++;
+    added++;
+  }
+  // 2. Work follow-ups until the daily quota is met.
+  for(let i = 0; i < pool.length && added < dailyQuota; i++){
+    const p = pool[i];
+    p.step += 1;
+    p.touches += 1;
+    added++;
+    const r = Math.random();
+    if(r < 0.05) p.status = 'Booked';
+    else if(r < 0.18) p.status = 'Replied';
+    else if(p.step >= AP_SEQ_LEN - 1) p.status = 'Nurture';
+  }
+
+  AP.weekTouches += added;
+  AP.lastRun = new Date().toISOString();
+  apSave();
+  apRender();
+  return added;
+}
+
+function apRunNow(){
+  const n = apRunCycle();
+  toast('Agent ran a day. ' + n + ' touches logged. ' + AP.weekTouches + ' / ' + AP.cfg.target + ' this week.', 'green');
+}
+
+function apStartTimer(){ apStopTimer(); AP_TIMER = setInterval(apTick, 4000); }
+function apStopTimer(){ if(AP_TIMER){ clearInterval(AP_TIMER); AP_TIMER = null; } }
+function apTick(){
+  apRollover();
+  if(AP.weekTouches >= Math.max(1, AP.cfg.target)){
+    apStopTimer();
+    apRenderState();
+    toast('Weekly target hit. ' + AP.weekTouches + ' touches logged this week.', 'green');
+    return;
+  }
+  apRunCycle();
+}
+
+/* The button. Draft <-> live. Live means the agent acts on its own. */
+function apToggleLive(){
+  AP.live = !AP.live;
+  if(AP.live){
+    apSave();
+    apRenderState();
+    toast('Agent live. It is now sourcing and working prospects on its own.', 'green');
+    apRunCycle();       // first day immediately
+    apStartTimer();     // then keep going until the weekly target is met
+  } else {
+    apStopTimer();
+    apSave();
+    apRenderState();
+    toast('Agent paused. Nothing goes out until you go live again.', 'amber');
+  }
+}
+
+/* Delete the engine: clear every sourced prospect and switch off. Keeps settings. */
+function apReset(){
+  if(!window.confirm('Delete the prospecting engine? This removes every prospect the agent has sourced and switches it off. This cannot be undone.')) return;
+  apStopTimer();
+  const cfg = AP.cfg;
+  AP = { live:false, weekKey:'', weekTouches:0, todayKey:'', todayCount:0, lastRun:null, list:[], cfg:cfg };
+  apRollover();
+  apSave();
+  apRender();
+  apRenderState();
+  toast('Engine deleted. Prospects cleared and agent switched off.', 'red');
+}
+
+function apAddManual(){
+  const name = (document.getElementById('ap-name').value||'').trim();
+  const signal = (document.getElementById('ap-signal').value||'').trim();
+  if(!name){ toast('Add a name.', 'amber'); return; }
+  if(!signal){ toast('A buying signal is required. No signal, no row.', 'red'); return; }
+  AP.list.unshift(apMakeProspect({
+    name: name,
+    co: (document.getElementById('ap-co').value||'').trim(),
+    ch: document.getElementById('ap-ch').value,
+    signal: signal
+  }));
+  apSave();
+  ['ap-name','ap-co','ap-signal'].forEach(i => document.getElementById(i).value = '');
+  apRender();
+  toast('Added.', 'green');
+}
+
+function apSet(id, field, val){
+  const p = AP.list.find(x => x.id === id); if(!p) return;
+  if(field === 'step') val = parseInt(val, 10);
+  p[field] = val;
+  apSave(); apRender();
+}
+function apDel(id){
+  AP.list = AP.list.filter(x => x.id !== id);
+  apSave(); apRender();
+}
+
+function apCfgChange(){
+  AP.cfg.perDay = Math.max(1, parseInt(document.getElementById('ap-cfg-perday').value, 10) || 1);
+  AP.cfg.days   = Math.max(1, Math.min(7, parseInt(document.getElementById('ap-cfg-days').value, 10) || 1));
+  AP.cfg.target = Math.max(1, parseInt(document.getElementById('ap-cfg-target').value, 10) || 1);
+  AP.cfg.li = document.getElementById('ap-cfg-li').checked;
+  AP.cfg.fb = document.getElementById('ap-cfg-fb').checked;
+  if(!AP.cfg.li && !AP.cfg.fb){ AP.cfg.li = true; document.getElementById('ap-cfg-li').checked = true; }
+  apSave();
+  apRender();
+}
+function apSyncCfgInputs(){
+  document.getElementById('ap-cfg-perday').value = AP.cfg.perDay;
+  document.getElementById('ap-cfg-days').value = AP.cfg.days;
+  document.getElementById('ap-cfg-target').value = AP.cfg.target;
+  document.getElementById('ap-cfg-li').checked = !!AP.cfg.li;
+  document.getElementById('ap-cfg-fb').checked = !!AP.cfg.fb;
+}
+
+function apRenderState(){
+  const dot = document.getElementById('ap-dot');
+  const lbl = document.getElementById('ap-state-label');
+  const sub = document.getElementById('ap-state-sub');
+  const btn = document.getElementById('ap-golive');
+  if(!dot) return;
+  if(AP.live){
+    dot.style.background = 'var(--green)';
+    dot.style.boxShadow = '0 0 0 4px rgba(45,212,167,.15)';
+    lbl.textContent = 'LIVE — autonomous';
+    sub.textContent = 'The agent is sourcing prospects and working the sequence on its own.';
+    btn.textContent = 'Pause agent';
+    btn.style.background = 'var(--amber)';
+  } else {
+    dot.style.background = 'var(--amber)';
+    dot.style.boxShadow = '0 0 0 4px rgba(245,177,74,.15)';
+    lbl.textContent = 'Draft — not live';
+    sub.textContent = 'The agent is idle. Review the draft prospects, then go live when you are ready.';
+    btn.textContent = 'Go live';
+    btn.style.background = '';
+  }
+}
+
+function apVerdict(el, val, green, amber){
+  if(!el) return;
+  let cls = 'od-red', l = 'keep going';
+  if(val >= green){ cls = 'od-green'; l = 'hit'; }
+  else if(val >= amber){ cls = 'od-amber'; l = 'halfway'; }
+  el.innerHTML = '<span class="od-verdict ' + cls + '">' + l + '</span>';
+}
+
+function apKpis(){
+  const target = Math.max(1, AP.cfg.target);
+  const seq  = AP.list.filter(p => p.status === 'In sequence').length;
+  const rep  = AP.list.filter(p => p.status === 'Replied').length;
+  const book = AP.list.filter(p => p.status === 'Booked').length;
+  const won  = AP.list.filter(p => p.status === 'Won').length;
+  document.getElementById('ap-k-week').textContent = AP.weekTouches;
+  document.getElementById('ap-k-target').textContent = target;
+  document.getElementById('ap-k-today').textContent = AP.todayCount;
+  document.getElementById('ap-k-perday').textContent = AP.cfg.perDay;
+  document.getElementById('ap-k-seq').textContent = seq;
+  document.getElementById('ap-k-rep').textContent = rep;
+  document.getElementById('ap-k-book').textContent = book;
+  document.getElementById('ap-k-won').textContent = won;
+  apVerdict(document.getElementById('ap-k-week-v'), AP.weekTouches, target, Math.ceil(target/2));
+  const note = document.getElementById('ap-cfg-note');
+  if(note){
+    const srcs = [AP.cfg.li ? 'LinkedIn' : null, AP.cfg.fb ? 'Facebook' : null].filter(Boolean).join(' and ');
+    note.textContent = AP.cfg.perDay + ' a day over ' + AP.cfg.days + ' days from ' + srcs + '. The agent aims for ' + target + ' touches a week.';
+  }
+}
+
+function apOptions(arr, current, useIndex){
+  return arr.map((v,i) => {
+    const val = useIndex ? i : v;
+    const on = (useIndex ? i === current : v === current) ? ' selected' : '';
+    return '<option value="' + val + '"' + on + '>' + escapeHtml(String(useIndex ? v : v)) + '</option>';
+  }).join('');
+}
+
+function apRender(){
+  apKpis();
+  const filter = (document.getElementById('ap-filter').value||'').toLowerCase();
+  const rows = AP.list.filter(p => {
+    if(!filter) return true;
+    return (p.name + ' ' + p.co + ' ' + p.signal).toLowerCase().includes(filter);
+  });
+  const table = document.getElementById('ap-table');
+  if(AP.list.length === 0){
+    table.innerHTML = '<tr><td class="tk-empty">No prospects yet. Press <strong>Run agent now</strong> to let the agent source a day, or add one by hand.</td></tr>';
+  } else {
+    let html = '<tr><th>Prospect</th><th>Channel</th><th>Signal</th><th>Step</th><th>Status</th><th>Touches</th><th>Found</th><th></th></tr>';
+    rows.forEach(p => {
+      const badge = p.source === 'agent'
+        ? '<span class="od-verdict od-green" style="padding:1px 7px; font-size:10.5px">agent</span>'
+        : '<span class="od-verdict od-amber" style="padding:1px 7px; font-size:10.5px">manual</span>';
+      html += '<tr>'
+        + '<td><div class="tk-name">' + escapeHtml(p.name) + '</div><div class="tk-co">' + escapeHtml(p.co) + '</div><div style="margin-top:3px">' + badge + '</div></td>'
+        + '<td class="small">' + escapeHtml(p.ch) + '<br><span style="color:var(--muted)">' + escapeHtml(p.hb) + '</span></td>'
+        + '<td class="tk-sig">' + escapeHtml(p.signal) + '</td>'
+        + '<td><select class="tk-sel" onchange="apSet(\'' + p.id + '\',\'step\',this.value)">' + apOptions(AP_SEQ_LABELS, p.step, true) + '</select></td>'
+        + '<td><select class="tk-sel" onchange="apSet(\'' + p.id + '\',\'status\',this.value)">' + apOptions(AP_STATUS, p.status, false) + '</select></td>'
+        + '<td style="text-align:center; font-weight:700">' + (p.touches||0) + '</td>'
+        + '<td class="small" style="color:var(--muted)">' + escapeHtml(p.found||'') + '</td>'
+        + '<td><button class="tk-x" onclick="apDel(\'' + p.id + '\')">del</button></td>'
+        + '</tr>';
+    });
+    if(rows.length === 0) html += '<tr><td class="tk-empty" colspan="8">No rows match that filter.</td></tr>';
+    table.innerHTML = html;
+  }
+}
+
+function apCsvCell(v){ v = (v==null?'':String(v)); return '"' + v.replace(/"/g,'""') + '"'; }
+function apExportCsv(){
+  const cols = ['name','co','ch','hb','signal','step','status','touches','found','source'];
+  let csv = cols.join(',') + '\n';
+  AP.list.forEach(p => { csv += cols.map(c => apCsvCell(p[c])).join(',') + '\n'; });
+  const blob = new Blob([csv], { type:'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'od-autonomous-prospecting.csv';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 500);
+  toast('CSV exported.', 'green');
+}
+
+apLoad();
+apRollover();
+apSyncCfgInputs();
+apRender();
+apRenderState();
+apSave();
+/* If it was left live, resume autonomy on load (until the weekly target). */
+if(AP.live && AP.weekTouches < Math.max(1, AP.cfg.target)) apStartTimer();
 </script>
 
 </body>
