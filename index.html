@@ -1091,6 +1091,7 @@
       <div class="nav-item" data-view="measure"><span class="nav-icon">⇡</span> Measurement</div>
       <div class="nav-item" data-view="outreach"><span class="nav-icon">✦</span> LinkedIn Outreach</div>
       <div class="nav-item" data-view="tracker"><span class="nav-icon">◎</span> Outreach Tracker</div>
+      <div class="nav-item" data-view="comparison"><span class="nav-icon">⚖</span> Comparison Pages</div>
     </nav>
     <div style="margin-top: 28px; padding: 14px; background: var(--panel-2); border-radius: 8px; font-size: 11px; color: var(--muted); line-height: 1.5;">
       <div style="color: var(--text); font-weight: 600; margin-bottom: 6px;">Launch window</div>
@@ -1941,6 +1942,254 @@ Kevin</div>
           <input class="od-in" id="tk-filter" placeholder="Filter by name, company or signal" oninput="tkRender()" style="max-width:280px">
         </div>
         <table class="tk-table" id="tk-table"></table>
+      </div>
+
+    </section>
+
+    <!-- COMPARISON PAGES (Ch4) -->
+    <section class="view" id="view-comparison">
+      <style>
+        .cmp-table { width:100%; border-collapse:collapse; margin-top:4px; }
+        .cmp-table th, .cmp-table td { padding:11px 12px; border-bottom:1px solid var(--line); text-align:left; font-size:13.5px; vertical-align:top; }
+        .cmp-table thead th { font-size:12px; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); font-weight:700; border-bottom:1px solid var(--line); }
+        .cmp-table tbody tr:last-child td { border-bottom:none; }
+        .cmp-table .cmp-crit { color:var(--muted); font-weight:600; width:22%; }
+        .cmp-table .cmp-od { background:rgba(45,212,167,.06); }
+        .cmp-table thead th.cmp-od-h { color:var(--green); }
+        .cmp-scroll { overflow-x:auto; }
+        .cmp-when { border-left:3px solid var(--accent); background:var(--panel-2); border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13.5px; line-height:1.65; }
+        .cmp-obj { margin:0 0 12px; }
+        .cmp-obj-q { font-weight:700; font-size:13.5px; color:var(--text); }
+        .cmp-obj-a { font-size:13px; color:var(--muted); line-height:1.65; margin-top:3px; }
+        .cmp-cta { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:16px; padding-top:16px; border-top:1px solid var(--line); }
+        .cmp-page-head { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px; }
+        .cmp-page-head h2 { font-family:'Fraunces',serif; font-size:22px; font-weight:600; margin:0; letter-spacing:-.3px; }
+        .cmp-kicker { font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--accent); font-weight:700; }
+        .cmp-seo { font-size:12px; color:var(--muted); background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-top:14px; line-height:1.6; }
+      </style>
+
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Comparison pages — the "vs" set (Ch4)</h1>
+          <p class="page-sub">Decision-stage pages for the highest-intent traffic. Someone typing "Operations Director vs a VA" is not learning — they're choosing. These pages help them choose, honestly. Each one is a landing page: headline, honest concession, the real numbers, objections answered, book the demo.</p>
+        </div>
+        <div class="od-btnrow" style="margin-top:0">
+          <a class="btn btn-green btn-sm" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Booking link →</a>
+        </div>
+      </div>
+
+      <!-- AT A GLANCE -->
+      <div class="card" style="margin-bottom:22px; border-top:3px solid var(--accent);">
+        <div style="font-weight:700; font-size:16px; margin-bottom:2px;">At a glance — the four ways to fix it</div>
+        <div class="small" style="margin-bottom:12px;">Same job — get the everyday work off the founder — four ways to buy it. This is the table that lives near the top of every page below.</div>
+        <div class="cmp-scroll">
+          <table class="cmp-table">
+            <thead>
+              <tr>
+                <th class="cmp-crit">&nbsp;</th>
+                <th>Do it yourself</th>
+                <th>Hire a VA</th>
+                <th>Use an agency</th>
+                <th class="cmp-od-h">Operations Director</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="cmp-crit">Upfront cost</td>
+                <td>£0 <span class="small">(your weekends)</span></td>
+                <td>Recruit + train time</td>
+                <td>Onboarding fee, often £1k–£5k</td>
+                <td class="cmp-od">£1,500 one-off build</td>
+              </tr>
+              <tr>
+                <td class="cmp-crit">Monthly cost</td>
+                <td>Tool sprawl — £200–£800+</td>
+                <td>£1,600–£3,000+ (UK, PT–FT)</td>
+                <td>£1,500–£6,000 retainer</td>
+                <td class="cmp-od">£350/mo, run for you</td>
+              </tr>
+              <tr>
+                <td class="cmp-crit">What you actually get</td>
+                <td>More tools to manage</td>
+                <td>A person doing tasks</td>
+                <td>Work handed back as files</td>
+                <td class="cmp-od">A running AI system, operated</td>
+              </tr>
+              <tr>
+                <td class="cmp-crit">Who runs it day to day</td>
+                <td><span class="od-verdict od-red">You</span></td>
+                <td><span class="od-verdict od-amber">You manage them</span></td>
+                <td><span class="od-verdict od-amber">The agency</span></td>
+                <td class="cmp-od"><span class="od-verdict od-green">We do</span></td>
+              </tr>
+              <tr>
+                <td class="cmp-crit">Key-person risk</td>
+                <td><span class="od-verdict od-red">It's all you</span></td>
+                <td><span class="od-verdict od-red">They can quit</span></td>
+                <td><span class="od-verdict od-amber">Account churn</span></td>
+                <td class="cmp-od"><span class="od-verdict od-green">System, not a person</span></td>
+              </tr>
+              <tr>
+                <td class="cmp-crit">You own it</td>
+                <td><span class="od-verdict od-green">Yes</span></td>
+                <td><span class="od-verdict od-amber">Partly</span></td>
+                <td><span class="od-verdict od-red">Rarely</span></td>
+                <td class="cmp-od"><span class="od-verdict od-green">Yes — in your accounts</span></td>
+              </tr>
+              <tr>
+                <td class="cmp-crit">Lock-in</td>
+                <td>—</td>
+                <td>Notice period, HR</td>
+                <td>3–12 month contracts</td>
+                <td class="cmp-od">None — 30 days' notice</td>
+              </tr>
+              <tr>
+                <td class="cmp-crit">Best for</td>
+                <td>Pre-£100k, plenty of time</td>
+                <td>A steady stream of simple tasks</td>
+                <td>One-off projects, big budgets</td>
+                <td class="cmp-od">Founder-led, £100k+, everything runs through you</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small" style="margin-top:12px; opacity:.8;">Figures are honest ranges for UK founder-led businesses, not quotes. Operations Director pricing is fixed: £1,500 to build, £350/mo to run, no lock-in, everything in your own accounts. New company — no case studies yet. What we have is a working system and a fixed price.</div>
+      </div>
+
+      <!-- PAGE 1: vs DIY -->
+      <div class="card" style="margin-bottom:22px;">
+        <div class="cmp-page-head">
+          <span class="cmp-kicker">Page 1</span>
+          <h2>Operations Director vs doing it yourself</h2>
+        </div>
+        <p class="small" style="font-size:13.5px; line-height:1.65; color:var(--text);">You've kept the business running out of your own head, a stack of tools and a spreadsheet that only you understand. It works — right up until you want a week off, or the business stops the moment you step away. DIY isn't free. It's paid in the one thing you can't buy back: your time, and the ceiling it puts on the business.</p>
+
+        <div class="cmp-when"><strong>When DIY is genuinely the right call:</strong> you're under £100k turnover, you have real time in the week, and the admin is still small enough to hold in your head. If that's you, don't buy anything yet — tighten your tools and come back when the business is bigger than one person's memory.</div>
+
+        <div class="cmp-scroll">
+          <table class="cmp-table">
+            <thead>
+              <tr><th class="cmp-crit">&nbsp;</th><th>Doing it yourself</th><th class="cmp-od-h">Operations Director</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="cmp-crit">Real cost</td><td>£0 in cash, 8–15+ hrs/week of you</td><td class="cmp-od">£1,500 + £350/mo, hours handed back</td></tr>
+              <tr><td class="cmp-crit">The tool stack</td><td>5–11 tools, none talking to each other</td><td class="cmp-od">One system, connected to your data</td></tr>
+              <tr><td class="cmp-crit">Who fixes it at 4am</td><td><span class="od-verdict od-red">You</span></td><td class="cmp-od"><span class="od-verdict od-green">The system already did</span></td></tr>
+              <tr><td class="cmp-crit">If you step away</td><td><span class="od-verdict od-red">It stops</span></td><td class="cmp-od"><span class="od-verdict od-green">It keeps running</span></td></tr>
+              <tr><td class="cmp-crit">Setup effort</td><td>Ongoing, forever</td><td class="cmp-od">Two afternoons, then it's run for you</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="font-weight:700; font-size:14px; margin:18px 0 8px;">The objections, answered</div>
+        <div class="cmp-obj">
+          <div class="cmp-obj-q">"No one knows my business well enough to hand it over."</div>
+          <div class="cmp-obj-a">That's exactly the problem, not the reason to keep going. We don't hand you software and leave — we build the system around how your business actually works, in a 30-minute demo we map the first three jobs, and we run them. You stay the owner; you stop being the operator.</div>
+        </div>
+        <div class="cmp-obj">
+          <div class="cmp-obj-q">"I can't afford another monthly bill."</div>
+          <div class="cmp-obj-a">You're already paying — in £200–£800 of tool subscriptions and 8–15 hours a week you could bill or spend on growth. £350/mo replaces both and gives you the week back.</div>
+        </div>
+
+        <div class="cmp-cta">
+          <a class="btn btn-green" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Book a 30-min demo →</a>
+          <span class="small">We map the first three jobs we'd take off you. If it's not a fit, we'll say so.</span>
+        </div>
+        <div class="cmp-seo"><strong>SEO title:</strong> Operations Director vs doing it yourself: is DIY costing you more? &nbsp;·&nbsp; <strong>Meta:</strong> DIY ops feels free until you price your own hours and tool sprawl. An honest side-by-side for founder-led UK businesses at £100k+. &nbsp;·&nbsp; <strong>Target term:</strong> "operations director vs doing it yourself / DIY business operations"</div>
+      </div>
+
+      <!-- PAGE 2: vs a VA -->
+      <div class="card" style="margin-bottom:22px;">
+        <div class="cmp-page-head">
+          <span class="cmp-kicker">Page 2</span>
+          <h2>Operations Director vs hiring a VA</h2>
+        </div>
+        <p class="small" style="font-size:13.5px; line-height:1.65; color:var(--text);">A virtual assistant takes tasks off your plate. That's real, and for some businesses it's the right move. But a VA is a person doing tasks — not a system running your operations. You still decide what happens, you still manage them, and when they're off or they leave, the knowledge walks out with them.</p>
+
+        <div class="cmp-when"><strong>When a VA is genuinely the right call:</strong> you have a steady stream of simple, repeatable tasks, you enjoy managing people, and you want a human in the loop for judgement calls. A good VA is worth every pound. The question is whether you're buying tasks done — or a business that runs without you.</div>
+
+        <div class="cmp-scroll">
+          <table class="cmp-table">
+            <thead>
+              <tr><th class="cmp-crit">&nbsp;</th><th>A VA</th><th class="cmp-od-h">Operations Director</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="cmp-crit">Monthly cost</td><td>£1,600–£3,000+ for part–full time</td><td class="cmp-od">£350/mo, flat</td></tr>
+              <tr><td class="cmp-crit">What it is</td><td>A person doing the tasks you assign</td><td class="cmp-od">A system doing the jobs, run for you</td></tr>
+              <tr><td class="cmp-crit">Management load</td><td><span class="od-verdict od-amber">You brief &amp; manage them</span></td><td class="cmp-od"><span class="od-verdict od-green">We run it</span></td></tr>
+              <tr><td class="cmp-crit">Off sick / on holiday</td><td><span class="od-verdict od-red">Work stops</span></td><td class="cmp-od"><span class="od-verdict od-green">Runs 24/7</span></td></tr>
+              <tr><td class="cmp-crit">If they quit</td><td><span class="od-verdict od-red">Knowledge leaves too</span></td><td class="cmp-od"><span class="od-verdict od-green">System stays, you own it</span></td></tr>
+              <tr><td class="cmp-crit">Capacity</td><td>One person's hours</td><td class="cmp-od">Scales without a new hire</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="font-weight:700; font-size:14px; margin:18px 0 8px;">The objections, answered</div>
+        <div class="cmp-obj">
+          <div class="cmp-obj-q">"I want a human, not a bot."</div>
+          <div class="cmp-obj-a">You still get one — us. We build and run the system for you; you're not left alone with software. The difference is the everyday work is handled by a system that doesn't call in sick, and you're not spending your week managing someone.</div>
+        </div>
+        <div class="cmp-obj">
+          <div class="cmp-obj-q">"A VA can handle anything I throw at them."</div>
+          <div class="cmp-obj-a">For one-offs, true. But the recurring jobs eating your week — the chasing, the updating, the reporting — are exactly what a system should own, so a person is free for the work that actually needs a human. Many businesses run both: keep the VA for judgement, put the repeatable work on Operations Director.</div>
+        </div>
+        <div class="cmp-obj">
+          <div class="cmp-obj-q">"A VA is cheaper."</div>
+          <div class="cmp-obj-a">Compare like for like. £350/mo against £1,600+ for part-time hours — plus recruiting, training, notice periods and the risk of starting over when they leave. The system doesn't churn.</div>
+        </div>
+
+        <div class="cmp-cta">
+          <a class="btn btn-green" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Book a 30-min demo →</a>
+          <span class="small">See the exact jobs a system would take, before you commit to a salary.</span>
+        </div>
+        <div class="cmp-seo"><strong>SEO title:</strong> Operations Director vs a virtual assistant: which does your business need? &nbsp;·&nbsp; <strong>Meta:</strong> A VA does tasks; a system runs operations. An honest side-by-side on cost, management load and key-person risk for founder-led UK businesses. &nbsp;·&nbsp; <strong>Target term:</strong> "operations director vs virtual assistant / VA"</div>
+      </div>
+
+      <!-- PAGE 3: vs an agency -->
+      <div class="card" style="margin-bottom:22px;">
+        <div class="cmp-page-head">
+          <span class="cmp-kicker">Page 3</span>
+          <h2>Operations Director vs using an agency</h2>
+        </div>
+        <p class="small" style="font-size:13.5px; line-height:1.65; color:var(--text);">An agency brings a team and a process. For a defined project with a real budget, that's often the right buy. But agencies do the work and hand it back — usually as files, decks and dashboards you then have to run. You rent their process; you rarely own the system. And the retainer keeps running whether the work does or not.</p>
+
+        <div class="cmp-when"><strong>When an agency is genuinely the right call:</strong> you have a one-off project with a clear brief and a budget to match — a rebrand, a launch, a migration. Pay for the sprint, take the output, move on. Where it goes wrong is using a monthly retainer to do the everyday running of your business: you pay agency rates for admin, and you still don't own the thing at the end.</div>
+
+        <div class="cmp-scroll">
+          <table class="cmp-table">
+            <thead>
+              <tr><th class="cmp-crit">&nbsp;</th><th>An agency</th><th class="cmp-od-h">Operations Director</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="cmp-crit">Monthly cost</td><td>£1,500–£6,000 retainer</td><td class="cmp-od">£350/mo, flat</td></tr>
+              <tr><td class="cmp-crit">What you're left with</td><td>Deliverables handed back to you</td><td class="cmp-od">A live system, run and owned by you</td></tr>
+              <tr><td class="cmp-crit">Who runs it after</td><td><span class="od-verdict od-red">Back to you</span></td><td class="cmp-od"><span class="od-verdict od-green">We keep running it</span></td></tr>
+              <tr><td class="cmp-crit">Contract</td><td><span class="od-verdict od-amber">3–12 month lock-in</span></td><td class="cmp-od"><span class="od-verdict od-green">30 days' notice, no lock-in</span></td></tr>
+              <tr><td class="cmp-crit">Ownership</td><td><span class="od-verdict od-red">Their tools &amp; accounts</span></td><td class="cmp-od"><span class="od-verdict od-green">Your accounts, your data</span></td></tr>
+              <tr><td class="cmp-crit">Built around</td><td>Their standard playbook</td><td class="cmp-od">How your business actually runs</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="font-weight:700; font-size:14px; margin:18px 0 8px;">The objections, answered</div>
+        <div class="cmp-obj">
+          <div class="cmp-obj-q">"An agency has a whole team behind it."</div>
+          <div class="cmp-obj-a">And you pay for all of them, every month. We put AI on the jobs that eat your week and we run the system — you get the outcome without the retainer, and you own what's built.</div>
+        </div>
+        <div class="cmp-obj">
+          <div class="cmp-obj-q">"I need the accountability of a contract."</div>
+          <div class="cmp-obj-a">No lock-in is the accountability. We have to earn the £350 every month or you leave with 30 days' notice — and the system stays yours. An agency contract protects the agency; ours protects you.</div>
+        </div>
+        <div class="cmp-obj">
+          <div class="cmp-obj-q">"Agencies understand my industry."</div>
+          <div class="cmp-obj-a">We build around your business in the demo, not a template. And because it lives in your own accounts, it keeps learning how you actually work — instead of resetting every time the agency rotates your account manager.</div>
+        </div>
+
+        <div class="cmp-cta">
+          <a class="btn btn-green" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Book a 30-min demo →</a>
+          <span class="small">Compare a fixed £1,500 build against your next 3-month retainer.</span>
+        </div>
+        <div class="cmp-seo"><strong>SEO title:</strong> Operations Director vs an agency: own the system, skip the retainer &nbsp;·&nbsp; <strong>Meta:</strong> Agencies hand work back; we build and run a system you own — no lock-in, £350/mo. An honest side-by-side for founder-led UK businesses. &nbsp;·&nbsp; <strong>Target term:</strong> "operations director vs agency / ops agency alternative"</div>
       </div>
 
     </section>
