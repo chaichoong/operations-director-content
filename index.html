@@ -1454,14 +1454,14 @@ One honest note. We are new. No case studies yet. What we have is a working syst
 If the business stops when you step away, book a demo. Thirty minutes. We map the first three jobs we would take off you. If it is not a fit, I will say so.
 
 Book a demo:
-launch.operationsdirector.co.uk/book-a-demo
+operationsdirector.co.uk/book-a-demo/
 
 Kevin Brittain
 Founder, Operations Director</div>
           </div>
           <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
             <button class="btn btn-green btn-sm" onclick="copyLaunchEmail()">Copy email</button>
-            <a class="btn btn-ghost btn-sm" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Check the booking link</a>
+            <a class="btn btn-ghost btn-sm" href="https://operationsdirector.co.uk/book-a-demo/" target="_blank" rel="noopener">Check the booking link</a>
           </div>
           <div class="small" style="margin-top:10px; opacity:.75;">
             Not scheduled. Do not send before the go/no-go review (MASTER-PLAN &sect;11, due 31 Jul).
@@ -1568,7 +1568,7 @@ Founder, Operations Director</div>
       <div class="card" style="margin-top: 18px;">
         <div style="font-weight: 700; margin-bottom: 6px;">Attribution model</div>
         <p class="small" style="margin:0; line-height: 1.6;">
-          Each post links to <code>launch.operationsdirector.co.uk/book-a-demo?utm_source=&lt;channel&gt;&amp;utm_campaign=launch&amp;utm_content=day&lt;n&gt;</code>. Bookings inherit the UTM so cost-per-booking attributes cleanly per channel and per pillar. Website link for non-CTA mentions: <code>operationsdirector.co.uk</code>.
+          Each post links to <code>operationsdirector.co.uk/book-a-demo/?utm_source=&lt;channel&gt;&amp;utm_campaign=launch&amp;utm_content=day&lt;n&gt;</code>. Bookings inherit the UTM so cost-per-booking attributes cleanly per channel and per pillar. Website link for non-CTA mentions: <code>operationsdirector.co.uk</code>.
         </p>
       </div>
     </section>
@@ -1692,7 +1692,7 @@ Kevin</div>
         <div class="od-step">
           <div class="od-when">Day 14 . Message 4 . Booking push</div>
           <div class="od-goal">Direct, low friction, one link.</div>
-          <div class="od-msg" id="od-t6">Still happy to run that demo, [name]. 30 minutes, no pitch, you leave with a map. Here is the link: launch.operationsdirector.co.uk/book-a-demo</div>
+          <div class="od-msg" id="od-t6">Still happy to run that demo, [name]. 30 minutes, no pitch, you leave with a map. Here is the link: operationsdirector.co.uk/book-a-demo/</div>
           <button class="od-copy" onclick="od_copy('od-t6')">Copy</button>
         </div>
 
@@ -1966,6 +1966,33 @@ Kevin</div>
         .cmp-page-head h2 { font-family:'Fraunces',serif; font-size:22px; font-weight:600; margin:0; letter-spacing:-.3px; }
         .cmp-kicker { font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--accent); font-weight:700; }
         .cmp-seo { font-size:12px; color:var(--muted); background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-top:14px; line-height:1.6; }
+        /* plain-English + extras */
+        .cmp-plain { font-size:15px; line-height:1.7; color:var(--text); }
+        .cmp-plain strong { color:#fff; }
+        .cmp-pick { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:6px; }
+        @media (max-width:900px){ .cmp-pick { grid-template-columns:1fr 1fr; } }
+        @media (max-width:560px){ .cmp-pick { grid-template-columns:1fr; } }
+        .cmp-pick-card { background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:14px; }
+        .cmp-pick-card h4 { margin:0 0 8px; font-size:14px; }
+        .cmp-pick-card p { margin:0; font-size:13px; line-height:1.6; color:var(--muted); }
+        .cmp-pick-card.is-od { border-color:var(--green); background:rgba(45,212,167,.07); }
+        .cmp-faq { border-bottom:1px solid var(--line); padding:12px 0; }
+        .cmp-faq:last-child { border-bottom:none; }
+        .cmp-faq-q { font-weight:700; font-size:14px; color:var(--text); }
+        .cmp-faq-a { font-size:13.5px; line-height:1.65; color:var(--muted); margin-top:5px; }
+        .cmp-team { border:1px solid var(--amber); border-radius:12px; background:rgba(245,177,74,.06); padding:18px 20px; margin-bottom:22px; }
+        .cmp-team h3 { margin:0 0 4px; font-size:16px; }
+        .cmp-team .tag { display:inline-block; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; font-weight:800; color:var(--amber); background:rgba(245,177,74,.15); padding:2px 8px; border-radius:20px; margin-bottom:8px; }
+        .cmp-team-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px; }
+        @media (max-width:760px){ .cmp-team-grid { grid-template-columns:1fr; } }
+        .cmp-script { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px 14px; font-size:13px; line-height:1.6; }
+        .cmp-script .lbl { font-weight:700; color:var(--accent); font-size:12px; text-transform:uppercase; letter-spacing:.4px; }
+        .cmp-say { color:var(--text); font-style:italic; }
+        .cmp-stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0 2px; }
+        @media (max-width:700px){ .cmp-stat-row { grid-template-columns:1fr; } }
+        .cmp-stat { background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:14px; }
+        .cmp-stat .num { font-family:'Fraunces',serif; font-size:26px; font-weight:600; color:var(--accent); line-height:1; }
+        .cmp-stat .cap { font-size:12px; color:var(--muted); margin-top:6px; line-height:1.5; }
       </style>
 
       <div class="page-header">
@@ -1974,8 +2001,22 @@ Kevin</div>
           <p class="page-sub">Decision-stage pages for the highest-intent traffic. Someone typing "Operations Director vs a VA" is not learning — they're choosing. These pages help them choose, honestly. Each one is a landing page: headline, honest concession, the real numbers, objections answered, book the demo.</p>
         </div>
         <div class="od-btnrow" style="margin-top:0">
-          <a class="btn btn-green btn-sm" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Booking link →</a>
+          <a class="btn btn-green btn-sm" href="https://operationsdirector.co.uk/book-a-demo/" target="_blank" rel="noopener">Booking link →</a>
         </div>
+      </div>
+
+      <!-- IN PLAIN ENGLISH -->
+      <div class="card" style="margin-bottom:22px; border-top:3px solid var(--green);">
+        <div style="font-weight:700; font-size:16px; margin-bottom:8px;">In plain English (the whole thing in 30 seconds)</div>
+        <p class="cmp-plain" style="margin:0 0 12px;">Running a business means a hundred small jobs every week — chasing invoices, updating lists, answering the same emails, checking the numbers. Right now the owner does most of it. That's <strong>the everyday work</strong>, and it eats their time.</p>
+        <p class="cmp-plain" style="margin:0 0 12px;">There are four ways to get that work off the owner's plate:</p>
+        <ul class="cmp-plain" style="margin:0 0 12px; padding-left:20px;">
+          <li><strong>Do it yourself</strong> — keep doing it, with spreadsheets and lots of apps.</li>
+          <li><strong>Hire a VA</strong> — pay a person (a virtual assistant) to do the tasks.</li>
+          <li><strong>Use an agency</strong> — pay a company to do it and hand the work back.</li>
+          <li><strong>Operations Director</strong> — we build an AI system inside the business that does the everyday work, and we keep it running. You own it. It costs <strong>£1,500 to set up and £350 a month</strong>, and you can stop any time with 30 days' notice.</li>
+        </ul>
+        <p class="cmp-plain" style="margin:0;">The pages below help someone who's already decided to fix this pick the option that's right for them — <strong>honestly</strong>, even where another choice wins.</p>
       </div>
 
       <!-- AT A GLANCE -->
@@ -2004,8 +2045,8 @@ Kevin</div>
               <tr>
                 <td class="cmp-crit">Monthly cost</td>
                 <td>Tool sprawl — £200–£800+</td>
-                <td>£1,600–£3,000+ (UK, PT–FT)</td>
-                <td>£1,500–£6,000 retainer</td>
+                <td>£1,200–£4,800 (UK, PT–FT)</td>
+                <td>£1,250–£8,000+ retainer</td>
                 <td class="cmp-od">£350/mo, run for you</td>
               </tr>
               <tr>
@@ -2053,7 +2094,31 @@ Kevin</div>
             </tbody>
           </table>
         </div>
-        <div class="small" style="margin-top:12px; opacity:.8;">Figures are honest ranges for UK founder-led businesses, not quotes. Operations Director pricing is fixed: £1,500 to build, £350/mo to run, no lock-in, everything in your own accounts. New company — no case studies yet. What we have is a working system and a fixed price.</div>
+        <div class="small" style="margin-top:12px; opacity:.8;">Figures are honest 2025–26 UK ranges, not quotes — sources are listed at the foot of this page. Operations Director pricing is fixed: £1,500 to build, £350/mo to run, no lock-in, everything in your own accounts. New company — no case studies yet. What we have is a working system and a fixed price.</div>
+      </div>
+
+      <!-- WHICH ONE IS RIGHT FOR YOU -->
+      <div class="card" style="margin-bottom:22px;">
+        <div style="font-weight:700; font-size:16px; margin-bottom:2px;">Which one is right for you?</div>
+        <div class="small" style="margin-bottom:12px;">The honest 10-second answer. Pick the card that sounds like you.</div>
+        <div class="cmp-pick">
+          <div class="cmp-pick-card">
+            <h4>Do it yourself</h4>
+            <p>You're small, under £100k, and you still have spare hours in the week. Don't buy anything yet.</p>
+          </div>
+          <div class="cmp-pick-card">
+            <h4>Hire a VA</h4>
+            <p>You have lots of simple tasks, you're happy to manage a person, and you want a human for one-off jobs.</p>
+          </div>
+          <div class="cmp-pick-card">
+            <h4>Use an agency</h4>
+            <p>You have one big project with a clear brief and a real budget — a rebrand, a launch, a move.</p>
+          </div>
+          <div class="cmp-pick-card is-od">
+            <h4>Operations Director</h4>
+            <p>You're founder-led, £100k+, and <em>everything still runs through you</em>. You want it handled and owned — not another person to manage.</p>
+          </div>
+        </div>
       </div>
 
       <!-- PAGE 1: vs DIY -->
@@ -2066,13 +2131,20 @@ Kevin</div>
 
         <div class="cmp-when"><strong>When DIY is genuinely the right call:</strong> you're under £100k turnover, you have real time in the week, and the admin is still small enough to hold in your head. If that's you, don't buy anything yet — tighten your tools and come back when the business is bigger than one person's memory.</div>
 
+        <div class="cmp-stat-row">
+          <div class="cmp-stat"><div class="num">~11 hrs</div><div class="cap">a week the average UK small-business owner spends on admin — about 6 working days a month</div></div>
+          <div class="cmp-stat"><div class="num">2×</div><div class="cap">more time on admin than on actually growing the business</div></div>
+          <div class="cmp-stat"><div class="num">54%</div><div class="cap">of owners say paperwork gets in the way of running the business</div></div>
+        </div>
+        <div class="small" style="margin:6px 0 4px; opacity:.75;">Source: Amex SME Business Barometer, 1,000 UK business owners (see foot of page).</div>
+
         <div class="cmp-scroll">
           <table class="cmp-table">
             <thead>
               <tr><th class="cmp-crit">&nbsp;</th><th>Doing it yourself</th><th class="cmp-od-h">Operations Director</th></tr>
             </thead>
             <tbody>
-              <tr><td class="cmp-crit">Real cost</td><td>£0 in cash, 8–15+ hrs/week of you</td><td class="cmp-od">£1,500 + £350/mo, hours handed back</td></tr>
+              <tr><td class="cmp-crit">Real cost</td><td>£0 in cash, ~11 hrs/week of you (UK avg)</td><td class="cmp-od">£1,500 + £350/mo, hours handed back</td></tr>
               <tr><td class="cmp-crit">The tool stack</td><td>5–11 tools, none talking to each other</td><td class="cmp-od">One system, connected to your data</td></tr>
               <tr><td class="cmp-crit">Who fixes it at 4am</td><td><span class="od-verdict od-red">You</span></td><td class="cmp-od"><span class="od-verdict od-green">The system already did</span></td></tr>
               <tr><td class="cmp-crit">If you step away</td><td><span class="od-verdict od-red">It stops</span></td><td class="cmp-od"><span class="od-verdict od-green">It keeps running</span></td></tr>
@@ -2088,11 +2160,11 @@ Kevin</div>
         </div>
         <div class="cmp-obj">
           <div class="cmp-obj-q">"I can't afford another monthly bill."</div>
-          <div class="cmp-obj-a">You're already paying — in £200–£800 of tool subscriptions and 8–15 hours a week you could bill or spend on growth. £350/mo replaces both and gives you the week back.</div>
+          <div class="cmp-obj-a">You're already paying — in £200–£800 of tool subscriptions and around 11 hours a week (the UK average) you could bill or spend on growth. £350/mo replaces both and gives you the week back.</div>
         </div>
 
         <div class="cmp-cta">
-          <a class="btn btn-green" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Book a 30-min demo →</a>
+          <a class="btn btn-green" href="https://operationsdirector.co.uk/book-a-demo/" target="_blank" rel="noopener">Book a 30-min demo →</a>
           <span class="small">We map the first three jobs we'd take off you. If it's not a fit, we'll say so.</span>
         </div>
         <div class="cmp-seo"><strong>SEO title:</strong> Operations Director vs doing it yourself: is DIY costing you more? &nbsp;·&nbsp; <strong>Meta:</strong> DIY ops feels free until you price your own hours and tool sprawl. An honest side-by-side for founder-led UK businesses at £100k+. &nbsp;·&nbsp; <strong>Target term:</strong> "operations director vs doing it yourself / DIY business operations"</div>
@@ -2114,7 +2186,7 @@ Kevin</div>
               <tr><th class="cmp-crit">&nbsp;</th><th>A VA</th><th class="cmp-od-h">Operations Director</th></tr>
             </thead>
             <tbody>
-              <tr><td class="cmp-crit">Monthly cost</td><td>£1,600–£3,000+ for part–full time</td><td class="cmp-od">£350/mo, flat</td></tr>
+              <tr><td class="cmp-crit">Monthly cost</td><td>£1,200–£4,800 for part–full time</td><td class="cmp-od">£350/mo, flat</td></tr>
               <tr><td class="cmp-crit">What it is</td><td>A person doing the tasks you assign</td><td class="cmp-od">A system doing the jobs, run for you</td></tr>
               <tr><td class="cmp-crit">Management load</td><td><span class="od-verdict od-amber">You brief &amp; manage them</span></td><td class="cmp-od"><span class="od-verdict od-green">We run it</span></td></tr>
               <tr><td class="cmp-crit">Off sick / on holiday</td><td><span class="od-verdict od-red">Work stops</span></td><td class="cmp-od"><span class="od-verdict od-green">Runs 24/7</span></td></tr>
@@ -2135,11 +2207,11 @@ Kevin</div>
         </div>
         <div class="cmp-obj">
           <div class="cmp-obj-q">"A VA is cheaper."</div>
-          <div class="cmp-obj-a">Compare like for like. £350/mo against £1,600+ for part-time hours — plus recruiting, training, notice periods and the risk of starting over when they leave. The system doesn't churn.</div>
+          <div class="cmp-obj-a">Compare like for like. £350/mo against £1,200+ for part-time hours (UK VAs run £25–£40 an hour) — plus recruiting, training, notice periods and the risk of starting over when they leave. The system doesn't churn.</div>
         </div>
 
         <div class="cmp-cta">
-          <a class="btn btn-green" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Book a 30-min demo →</a>
+          <a class="btn btn-green" href="https://operationsdirector.co.uk/book-a-demo/" target="_blank" rel="noopener">Book a 30-min demo →</a>
           <span class="small">See the exact jobs a system would take, before you commit to a salary.</span>
         </div>
         <div class="cmp-seo"><strong>SEO title:</strong> Operations Director vs a virtual assistant: which does your business need? &nbsp;·&nbsp; <strong>Meta:</strong> A VA does tasks; a system runs operations. An honest side-by-side on cost, management load and key-person risk for founder-led UK businesses. &nbsp;·&nbsp; <strong>Target term:</strong> "operations director vs virtual assistant / VA"</div>
@@ -2161,7 +2233,7 @@ Kevin</div>
               <tr><th class="cmp-crit">&nbsp;</th><th>An agency</th><th class="cmp-od-h">Operations Director</th></tr>
             </thead>
             <tbody>
-              <tr><td class="cmp-crit">Monthly cost</td><td>£1,500–£6,000 retainer</td><td class="cmp-od">£350/mo, flat</td></tr>
+              <tr><td class="cmp-crit">Monthly cost</td><td>£1,250–£8,000+ retainer</td><td class="cmp-od">£350/mo, flat</td></tr>
               <tr><td class="cmp-crit">What you're left with</td><td>Deliverables handed back to you</td><td class="cmp-od">A live system, run and owned by you</td></tr>
               <tr><td class="cmp-crit">Who runs it after</td><td><span class="od-verdict od-red">Back to you</span></td><td class="cmp-od"><span class="od-verdict od-green">We keep running it</span></td></tr>
               <tr><td class="cmp-crit">Contract</td><td><span class="od-verdict od-amber">3–12 month lock-in</span></td><td class="cmp-od"><span class="od-verdict od-green">30 days' notice, no lock-in</span></td></tr>
@@ -2186,10 +2258,70 @@ Kevin</div>
         </div>
 
         <div class="cmp-cta">
-          <a class="btn btn-green" href="https://launch.operationsdirector.co.uk/book-a-demo" target="_blank" rel="noopener">Book a 30-min demo →</a>
+          <a class="btn btn-green" href="https://operationsdirector.co.uk/book-a-demo/" target="_blank" rel="noopener">Book a 30-min demo →</a>
           <span class="small">Compare a fixed £1,500 build against your next 3-month retainer.</span>
         </div>
         <div class="cmp-seo"><strong>SEO title:</strong> Operations Director vs an agency: own the system, skip the retainer &nbsp;·&nbsp; <strong>Meta:</strong> Agencies hand work back; we build and run a system you own — no lock-in, £350/mo. An honest side-by-side for founder-led UK businesses. &nbsp;·&nbsp; <strong>Target term:</strong> "operations director vs agency / ops agency alternative"</div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="card" style="margin-bottom:22px;">
+        <div style="font-weight:700; font-size:16px; margin-bottom:2px;">Common questions</div>
+        <div class="small" style="margin-bottom:8px;">The things people ask right before they book. Answered simply.</div>
+        <div class="cmp-faq"><div class="cmp-faq-q">Is this just more software I have to learn?</div><div class="cmp-faq-a">No. We build the system and we run it for you. You're not handed an app and left alone — the everyday work is done for you.</div></div>
+        <div class="cmp-faq"><div class="cmp-faq-q">What does it cost, all in?</div><div class="cmp-faq-a">£1,500 once to build it, then £350 a month to run it. No hidden fees, no contract. Stop any time with 30 days' notice.</div></div>
+        <div class="cmp-faq"><div class="cmp-faq-q">How fast does it start working?</div><div class="cmp-faq-a">Set-up takes a couple of afternoons, not a big "change project". In the free 30-minute demo we map the first three jobs we'd take off you.</div></div>
+        <div class="cmp-faq"><div class="cmp-faq-q">Who owns it — you or us?</div><div class="cmp-faq-a">You do. Everything sits inside your own accounts and your own data. If you ever leave, it stays with you.</div></div>
+        <div class="cmp-faq"><div class="cmp-faq-q">Can we keep our VA or team as well?</div><div class="cmp-faq-a">Yes, and many do. The system takes the repeatable work; people stay free for the jobs that really need a human.</div></div>
+        <div class="cmp-faq"><div class="cmp-faq-q">We're not very "techy" — is that a problem?</div><div class="cmp-faq-a">No. That's the whole point of "done for you". If you can use email, you can use this — and we're the ones running it.</div></div>
+        <div class="cmp-faq"><div class="cmp-faq-q">What if it turns out not to fit?</div><div class="cmp-faq-a">Then we'll tell you in the demo — we say so if it's not a fit. And because there's no lock-in, there's nothing to trap you.</div></div>
+      </div>
+
+      <!-- TEAM PLAYBOOK (Erica) -->
+      <div class="cmp-team">
+        <span class="tag">Team guide — not shown to prospects</span>
+        <h3>How to use these pages (Erica's playbook)</h3>
+        <p class="cmp-plain" style="font-size:14px; margin:0;">When someone asks "why you instead of X", don't argue — send them the matching page, then use the one-liner below. Every page is honest about when the other option wins; that honesty is what makes people trust the rest.</p>
+
+        <div class="cmp-team-grid">
+          <div class="cmp-script">
+            <div class="lbl">If they're doing it themselves</div>
+            <div>Send: the <strong>vs doing it yourself</strong> page.<br><span class="cmp-say">"Totally fair to keep doing it — the only question is what your own hours are worth. The average owner loses about 11 hours a week to admin. Want me to show you which three jobs we'd take off you first? The demo's free and there's no pitch."</span></div>
+          </div>
+          <div class="cmp-script">
+            <div class="lbl">If they're thinking of a VA</div>
+            <div>Send: the <strong>vs hiring a VA</strong> page.<br><span class="cmp-say">"A VA's brilliant for tasks and judgement. The difference is a VA is a person you manage; this is a system we run. Loads of people keep both. Shall we map what a system would take off your plate before you commit to a salary?"</span></div>
+          </div>
+          <div class="cmp-script">
+            <div class="lbl">If they're weighing an agency</div>
+            <div>Send: the <strong>vs using an agency</strong> page.<br><span class="cmp-say">"Agencies are great for a one-off project. For the everyday running, you're paying agency rates and you still don't own the system at the end. Ours you own, £350 a month, cancel any time. Worth a 30-minute look?"</span></div>
+          </div>
+          <div class="cmp-script">
+            <div class="lbl">If they say "it's too expensive"</div>
+            <div><span class="cmp-say">"Compared to what, though? A part-time VA starts around £1,200 a month, an agency retainer £1,250+. This is £350, run for you, no lock-in. It usually comes in cheaper than what they're already spending."</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px; font-weight:700; font-size:13.5px;">The three rules</div>
+        <ul class="cmp-plain" style="font-size:13.5px; margin:6px 0 0; padding-left:20px; color:var(--text);">
+          <li><strong>Always end with the booking link:</strong> <a href="https://operationsdirector.co.uk/book-a-demo/" target="_blank" rel="noopener">operationsdirector.co.uk/book-a-demo/</a> — 30 minutes, free, no pitch, they leave with a map.</li>
+          <li><strong>Never bad-mouth the alternative.</strong> Agree it's a fair choice, then show the honest trade-off. The pages already do this.</li>
+          <li><strong>If it's genuinely not a fit, say so.</strong> A "not right now" you were honest about comes back later; a hard sell doesn't.</li>
+        </ul>
+        <div style="margin-top:12px; font-weight:700; font-size:13.5px;">After they book</div>
+        <p class="cmp-plain" style="font-size:13.5px; margin:5px 0 0; color:var(--text);">Confirm the time, note where they came from (which "vs" page), and jot the one thing they said was eating their week — Kevin uses that to open the demo with the first job we'd take off them.</p>
+      </div>
+
+      <!-- SOURCES -->
+      <div class="card" style="margin-bottom:6px;">
+        <div style="font-weight:700; font-size:14px; margin-bottom:6px;">Where the numbers come from</div>
+        <div class="small" style="line-height:1.7;">
+          Figures are honest 2025–26 UK ranges to help someone orient, not fixed quotes.<br>
+          • Admin time (~11 hrs/week, 2× growth time, 54% paperwork): <a href="https://retailtimes.co.uk/amex-sme-barometer-small-business-owners-spend-nearly-twice-the-time-on-admin-than-growing-their-business/" target="_blank" rel="noopener">Amex SME Business Barometer</a> (1,000 UK owners).<br>
+          • VA rates (£25–£40/hr; PT ~£1,200–£1,600/mo; FT ~£2,400–£4,800/mo): <a href="https://beeconstructiveva.co.uk/2025/02/17/virtual-assistant-hourly-rates-uk-2025/" target="_blank" rel="noopener">UK VA rate guides, 2025–26</a>.<br>
+          • Agency retainers (£1,250–£3,500/mo single-channel; £3,500+/mo full-service): <a href="https://whito.co.uk/research/uk-agency-retainers/" target="_blank" rel="noopener">UK agency retainer research, 2026</a>.<br>
+          Operations Director pricing (£1,500 build + £350/mo, no lock-in, you own it) is fixed and set by us.
+        </div>
       </div>
 
     </section>
@@ -2349,7 +2481,7 @@ That's not a money problem. That's a visibility problem. You're not skint. You'r
 Operations Director puts your real cash position on one screen, what's actually in, what's actually due, what hits this weekend. No more refresh-refresh-refresh.
 
 If your Friday afternoons look like that, twenty minutes might be the most useful thing you do this week:
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'review',
     assetType: 'quote',
     assetSpec: 'Quote card · 1080×1350 · flat brand forest, hook in Fraunces, OD logo, booking URL footer.',
@@ -2377,7 +2509,7 @@ In the video:
 
 Watch → youtube.com/operationsdirector
 Or book a 30-min call to see your numbers loaded in →
-launch.operationsdirector.co.uk/book-a-demo`,
+operationsdirector.co.uk/book-a-demo/`,
     status: 'review',
     assetType: 'video',
     assetSpec: 'AI-generated screen-recorded walkthrough, 4:52 runtime. UK voice. End-card with QR to booking page.',
@@ -2405,7 +2537,7 @@ Slide 4: After (6 weeks). 2 hours/week of admin, down from 11. £640/yr in subs.
 Slide 5: The receipt. 9 hours back per person per week. £13.4k a year in tool spend, gone. One Sunday a month they didn't have before.
 
 Your version of this →
-launch.operationsdirector.co.uk/book-a-demo`,
+operationsdirector.co.uk/book-a-demo/`,
     status: 'approved',
     assetType: 'carousel',
     assetSpec: '5 slides, 1080×1350. Numerical comparison. Brand-consistent gradient + amber accents. CTA slide has QR.',
@@ -2434,7 +2566,7 @@ You don't have a team problem. You have an ownership problem dressed up as one. 
 Operations Director gives every task one owner, one date, one place. The Slack-channel fishbowl ends.
 
 30 minutes. No pitch.
-→ launch.operationsdirector.co.uk/book-a-demo
+→ operationsdirector.co.uk/book-a-demo/
 
 Kevin`,
     status: 'review',
@@ -2462,7 +2594,7 @@ That's the difference between AI-as-feature and AI-as-system. Everyone is sellin
 Operations Director is the second.
 
 If 'we should try AI' has been on your list for nine months, twenty minutes will be more useful than another article about prompts.
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'review',
     assetType: 'quote',
     assetSpec: 'Quote card · 1080×1350 · hook in Fraunces, flat brand forest, OD logo, booking URL footer.',
@@ -2484,7 +2616,7 @@ If 'we should try AI' has been on your list for nine months, twenty minutes will
 In 60 seconds, watch them collapse into a single Operations Director screen, every chase, every reminder, every 'did this ship?' lives in one place. The 47 tabs go away.
 
 Watch → youtube.com/operationsdirector
-Have us do it with your tabs → launch.operationsdirector.co.uk/book-a-demo`,
+Have us do it with your tabs → operationsdirector.co.uk/book-a-demo/`,
     status: 'review',
     assetType: 'video',
     assetSpec: '60s screen-recording. Speed-ramped 47-tab close. End-card with QR.',
@@ -2512,7 +2644,7 @@ The one I'd rewrite: Thursday's email. I led with 'who's doing that?'. Should ha
 Lesson recorded.
 
 If 'who's doing that?' is a phrase that lives in your week:
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft',
     assetType: 'quote',
     assetSpec: 'Quote card · weekly-recap layout · 1080×1350. Numbers backfilled before publish on Sunday 6pm.',
@@ -2540,7 +2672,7 @@ That's not productivity. That's friction with a UI.
 Operations Director moves the work out of the inbox and into a system that knows who, what, when. The inbox becomes a place for incoming, not a place for everything.
 
 30-minute look →
-launch.operationsdirector.co.uk/book-a-demo`,
+operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · 1080×1350 · flat brand forest, hook in Fraunces, OD logo, booking URL footer.', comments: []
   },
   {
@@ -2562,7 +2694,7 @@ In the video:
 The cost of not doing this: 5–7 hours of attention residue per person per week. We measured it.
 
 Watch → youtube.com/operationsdirector
-Book → launch.operationsdirector.co.uk/book-a-demo`,
+Book → operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'video', assetSpec: '5-min screen-recording. Vertical short cut-down for LinkedIn + IG.', comments: []
   },
   {
@@ -2587,7 +2719,7 @@ That's a full working day, per week, per owner. Lost.
 
 Operations Director collapses these into one screen, one question, one answer.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'infographic',
     assetSpec: '1080×1350 infographic. Six horizontal bars. Branded gradient + amber values. QR bottom-right.',
     comments: []
@@ -2612,7 +2744,7 @@ That's the gap we fill. We don't hand you another tool. We build it, set it up, 
 Twenty minutes. No pitch. Bring the tools you've already paid for and I'll tell you straight which ones to keep.
 
 Book a demo.
-→ launch.operationsdirector.co.uk/book-a-demo
+→ operationsdirector.co.uk/book-a-demo/
 
 Kevin`,
     status: 'draft', assetType: 'email', assetSpec: 'Weekly nurture email. Thursday 7:30am send.', comments: []
@@ -2634,7 +2766,7 @@ Once a month, sit with the question: which process exists here only because no o
 
 Operations Director is what I built so I never had to be the person who remembered.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · 1080×1350 · flat brand forest, hook in Fraunces, OD logo, booking URL footer.', comments: []
   },
   {
@@ -2651,7 +2783,7 @@ Operations Director is what I built so I never had to be the person who remember
 That's the difference between AI as a chatbot and AI as a system. The bot would summarise. The system books them.
 
 Watch → youtube.com/operationsdirector
-Book → launch.operationsdirector.co.uk/book-a-demo`,
+Book → operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'video', assetSpec: '60s screen-recorded demo. Vertical IG-reel cut.', comments: []
   },
   {
@@ -2669,7 +2801,7 @@ Worst post: Monday's inbox-graveyard piece. Strong line, no scene. Without a mom
 Hire we said no to this week: an ops manager, £42k. We deleted the operations the hire would have managed. Net: -7.4 hours/week without spending a penny on salary.
 
 If your next hire is to manage operations, twenty minutes might save you £42k.
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · weekly-recap layout. Numbers backfilled before publish.', comments: []
   },
 
@@ -2691,7 +2823,7 @@ The standups weren't the problem. The standups were the symptom of state living 
 
 If your week has more than one standup, it's not a meetings problem. It's a system one.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'image+text', assetSpec: '1080×1350 calendar before/after comparison screenshot with brand frame.', comments: []
   },
   {
@@ -2711,7 +2843,7 @@ In the video:
 • The alert that fires before you forget, not after
 
 → youtube.com/operationsdirector
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'video', assetSpec: '5-min screen-recording with annotation overlays.', comments: []
   },
   {
@@ -2733,7 +2865,7 @@ In the video:
 
 Recognise 3 or more? It's not effort. It's the system.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'carousel', assetSpec: '8 slides. One sign per slide + CTA slide with QR.', comments: []
   },
   {
@@ -2759,7 +2891,7 @@ Total time saved: 14 hours/week across two people. Total AI 'building' the owner
 That's because the AI lives inside a system. Not on a prompt page.
 
 30 minutes. No pitch.
-→ launch.operationsdirector.co.uk/book-a-demo
+→ operationsdirector.co.uk/book-a-demo/
 
 Kevin`,
     status: 'draft', assetType: 'email', assetSpec: 'Plain HTML weekly nurture email with embedded hero image.', comments: []
@@ -2781,7 +2913,7 @@ Automate the audience away. The decision still gets made, by one person, with th
 
 That's the work.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · 1080×1350 · flat brand forest, hook in Fraunces, OD logo, booking URL footer.', comments: []
   },
   {
@@ -2794,7 +2926,7 @@ That's the work.
     body: `90 seconds. Four weeks of bank transactions. Categorised by AI inside Operations Director, with no prompts written and no spreadsheet opened.
 
 Watch → youtube.com/operationsdirector
-Book → launch.operationsdirector.co.uk/book-a-demo`,
+Book → operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'video', assetSpec: '90s vertical screen-recording with on-screen highlights.', comments: []
   },
   {
@@ -2814,7 +2946,7 @@ What I've learnt watching 19 bookings come in:
 
 Money you can't see is the loudest problem.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · weekly-recap layout · 1080×1350. Numbers backfilled before publish.', comments: []
   },
 
@@ -2836,7 +2968,7 @@ He didn't need to hire. He needed to delete.
 
 If you're staring down a £42k hire to manage operations, the most useful 30 minutes you spend this month might be this one.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · 1080×1350 · flat brand forest, hook in Fraunces, OD logo, booking URL footer.', comments: []
   },
   {
@@ -2856,7 +2988,7 @@ In the video:
 • Read in 30 seconds. Decide in 60.
 
 → youtube.com/operationsdirector
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'video', assetSpec: '4–6 min explainer with on-screen annotation.', comments: []
   },
   {
@@ -2876,7 +3008,7 @@ In the slides: which posts drove which bookings, conversion rate per pillar, cos
 
 The shortest answer: cash-flow posts convert. Team posts get the saves. Admin posts get replies. Philosophy posts get the followers.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'carousel', assetSpec: '6 slides. Data-driven layout. Auto-generated from analytics.', comments: []
   },
   {
@@ -2897,7 +3029,7 @@ We screen-shared with an owner last week. 47 tabs open. Each one a 'place I need
 The day you collapse 47 to 1 is the day your business gets cheaper to run.
 
 30 minutes →
-launch.operationsdirector.co.uk/book-a-demo
+operationsdirector.co.uk/book-a-demo/
 
 Kevin`,
     status: 'draft', assetType: 'email+video', assetSpec: 'Email + 30s vertical video. Video opens with the 47-tab Chrome window collapsing into one OD screen.', comments: []
@@ -2917,7 +3049,7 @@ Hire the 11th person into a 10-person system that already runs on attention resi
 
 Fix the system first. Then hire into it.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · 1080×1350 · flat brand forest, hook in Fraunces, OD logo, booking URL footer.', comments: []
   },
   {
@@ -2930,7 +3062,7 @@ Fix the system first. Then hire into it.
     body: `Two minutes. Weekly cost report. Built live from bank data, no spreadsheet, no manual entry.
 
 → youtube.com/operationsdirector
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'video', assetSpec: '2:00 screen-recording with live data feed.', comments: []
   },
   {
@@ -2948,7 +3080,7 @@ The shift this week: posting stopped feeling like a launch and started feeling l
 
 That's the lesson. Show your operations. People who run businesses can smell systems.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · weekly-recap layout · 1080×1350. Numbers backfilled before publish.', comments: []
   },
 
@@ -2970,7 +3102,7 @@ The system you need is one that hands you yesterday's end-state, today, automati
 
 That's what Operations Director's Morning Brief does. It's the page that ended my 14-minute morning.
 
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'quote', assetSpec: 'Quote card · 1080×1350 · flat brand forest, hook in Fraunces, OD logo, booking URL footer.', comments: []
   },
   {
@@ -2989,7 +3121,7 @@ The standup we used to run? Gone. The first 14 minutes you used to lose? Gone.
 That's a system replacing a meeting and a habit, with one screen.
 
 → youtube.com/operationsdirector
-→ launch.operationsdirector.co.uk/book-a-demo`,
+→ operationsdirector.co.uk/book-a-demo/`,
     status: 'draft', assetType: 'video', assetSpec: '5-min screen-recording. Closing slide of the launch series.', comments: []
   }
 ];
@@ -3527,7 +3659,7 @@ const BRAND = {
   rule: 'rgba(255,255,255,0.18)',
   font: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
   fontHead: "'Fraunces', Georgia, 'Times New Roman', serif",
-  cta: 'launch.operationsdirector.co.uk/book-a-demo',
+  cta: 'operationsdirector.co.uk/book-a-demo/',
   ctaShort: 'Book a demo',
   website: 'operationsdirector.co.uk',
   brandName: 'OPERATIONS DIRECTOR',
@@ -3549,7 +3681,7 @@ const FONTS_READY = (window.document && document.fonts && document.fonts.load)
   : Promise.resolve();
 
 const LINKS = {
-  book: 'https://launch.operationsdirector.co.uk/book-a-demo',
+  book: 'https://operationsdirector.co.uk/book-a-demo/',
   website: 'https://operationsdirector.co.uk/'
 };
 
@@ -5651,7 +5783,7 @@ const TK_SEQ = [
   { k:'Message 2 (the gift)',   gap:3, t:'Most founders I speak to say the same thing. My business is me. I put together a short guide on getting 90% of the everyday work run by AI, so the place runs without you. Want me to send it over? No cost.' },
   { k:'Message 3 (proof)',      gap:4, t:'One firm I worked with, 14 staff, dropped 11 tools and freed the founder 12 hours a week. I run a free 30-minute demo that maps the first three jobs to take off you. Worth a look?' },
   { k:'Email (if you have it)', gap:4, t:'Subject: the thing eating your week\n\nHi [name], you mentioned [worst area]. I help founder-led firms hand that work to AI, done for you. Here is a short guide on getting to 90%: [Founder to Free link]. If it lands, I run a free 30-minute demo that maps the first three jobs to take off you.\n\nKevin' },
-  { k:'Message 4 (booking)',    gap:4, t:'Still happy to run that demo, [name]. 30 minutes, no pitch, you leave with a map. Here is the link: launch.operationsdirector.co.uk/book-a-demo' },
+  { k:'Message 4 (booking)',    gap:4, t:'Still happy to run that demo, [name]. 30 minutes, no pitch, you leave with a map. Here is the link: operationsdirector.co.uk/book-a-demo/' },
   { k:'Breakup',                gap:0, t:'Last note from me, [name]. If now is not the time, no problem. I will keep an eye on your posts. If the admin load ever gets too much, the offer stands.' }
 ];
 const TK_STATUS = ['New','In sequence','Replied','Booked','Won','Nurture','Not a fit'];
