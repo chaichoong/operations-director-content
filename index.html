@@ -1090,6 +1090,7 @@
       <div class="nav-item" data-view="buffer"><span class="nav-icon">⇪</span> Buffer Sync</div>
       <div class="nav-item" data-view="measure"><span class="nav-icon">⇡</span> Measurement</div>
       <div class="nav-item" data-view="outreach"><span class="nav-icon">✦</span> LinkedIn Outreach</div>
+      <div class="nav-item" data-view="replies"><span class="nav-icon">&#8617;</span> Reply Engine</div>
       <div class="nav-item" data-view="tracker"><span class="nav-icon">◎</span> Outreach Tracker</div>
       <div class="nav-item" data-view="comparison"><span class="nav-icon">⚖</span> Comparison Pages</div>
     </nav>
@@ -1535,6 +1536,7 @@ Founder, Operations Director</div>
       </div>
     </section>
 
+
     <!-- MEASURE -->
     <section class="view" id="view-measure">
       <div class="page-header">
@@ -1732,6 +1734,115 @@ Kevin</div>
         </div>
       </div>
 
+      <div class="tk-note">
+        <strong>When they reply, the sequence is over.</strong> Everything about handling an answer &mdash; the four approved replies, the response-time rule, and the tool that drafts it for you &mdash; now lives on the <span class="tm-link" onclick="switchView('replies')">Reply Engine</span> page.
+      </div>
+
+
+      <div class="od-grid2">
+        <div class="card">
+          <div style="font-weight:800; margin-bottom:8px;">Volume planner</div>
+          <div class="small" style="color:var(--muted); margin-bottom:8px;">Set your pace. The tool flags anything over the safe weekly cap.</div>
+          <label class="od-lab">Senders (LinkedIn accounts)</label>
+          <input class="od-in" id="od-senders" type="number" value="1" min="1" oninput="od_vol()">
+          <label class="od-lab">Invites per day, per sender</label>
+          <input class="od-in" id="od-perday" type="number" value="16" min="1" oninput="od_vol()">
+          <label class="od-lab">Working days per week</label>
+          <input class="od-in" id="od-days" type="number" value="5" min="1" max="7" oninput="od_vol()">
+          <div style="margin-top:14px" class="od-grid3">
+            <div><div class="od-lab">Per week</div><div class="od-out" id="od-vweek">80</div></div>
+            <div><div class="od-lab">Per month</div><div class="od-out" id="od-vmonth">347</div></div>
+            <div><div class="od-lab">Safety</div><div id="od-vsafe"><span class="od-verdict od-green">safe</span></div></div>
+          </div>
+          <div class="small" style="color:var(--muted); margin-top:10px;" id="od-vproj"></div>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:800; margin-bottom:8px;">Scorecard</div>
+          <div class="small" style="color:var(--muted); margin-bottom:8px;">Enter last month. Replace the benchmarks with your own numbers after the first ten calls.</div>
+          <div class="od-grid2">
+            <div><label class="od-lab">Invites sent</label><input class="od-in" id="od-s-inv" type="number" value="320" oninput="od_score()"></div>
+            <div><label class="od-lab">Accepted</label><input class="od-in" id="od-s-acc" type="number" value="128" oninput="od_score()"></div>
+            <div><label class="od-lab">Replies</label><input class="od-in" id="od-s-rep" type="number" value="26" oninput="od_score()"></div>
+            <div><label class="od-lab">Calls booked</label><input class="od-in" id="od-s-call" type="number" value="6" oninput="od_score()"></div>
+            <div><label class="od-lab">Clients won</label><input class="od-in" id="od-s-win" type="number" value="2" oninput="od_score()"></div>
+          </div>
+          <div style="margin-top:14px" class="od-grid3">
+            <div><div class="od-lab">Acceptance</div><div class="od-out" id="od-r-acc">40%</div><div id="od-v-acc"></div></div>
+            <div><div class="od-lab">Reply of accepted</div><div class="od-out" id="od-r-rep">20%</div><div id="od-v-rep"></div></div>
+            <div><div class="od-lab">Booked to client</div><div class="od-out" id="od-r-win">33%</div></div>
+          </div>
+          <div class="small" style="color:var(--muted); margin-top:10px;">Targets. Acceptance 40% or more. Reply 15% or more of accepted. Six calls a month lands about two clients. The 1,500 setup fee clears your acquisition cost on day one.</div>
+        </div>
+      </div>
+
+      <div class="od-grid2">
+        <div class="card">
+          <div style="font-weight:800; margin-bottom:8px;">Safety rules</div>
+          <div class="small" style="line-height:1.9;">
+            Warm up. Week 1 send 10 a day. Week 2 send 15. Week 3 onward send 20.<br>
+            Weekly cap about 100 per sender. Under 80 if the account is new or low trust.<br>
+            Spread invites across five working days. Never spike.<br>
+            Acceptance under 30% means stop and fix targeting.<br>
+            Reply under 10 to 15% at volume triggers quiet suppression.<br>
+            Withdraw pending invites older than two to three weeks.<br>
+            Best windows. Monday and Tuesday 9am to 12pm. Thursday for follow-ups.<br>
+            Keep your profile sharp. Photo and a value headline lift acceptance by up to 40%.
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-weight:800; margin-bottom:8px;">Where AI fits</div>
+          <div class="small" style="line-height:1.9;">
+            Use AI for the research layer, not the writing. Find the signal, draft from it, you approve.<br>
+            AI-personalised first messages lift reply rates by about 60% over generic ones.<br>
+            Signals to detect. New in role. Hiring ops or admin. Growth or funding. Tool complaints. Productivity engagement.<br>
+            Content warms outreach. Post three to four times a week from the Content Engine so prospects see proof when they check your profile.
+          </div>
+          <div class="small" style="color:var(--muted); margin-top:10px;">Sources. 2026 practitioner data and YouTube walkthroughs on signal-based outreach. Benchmarks. LinkedIn reply about 10.3% average, cold email about 5.1%. Signal-referencing messages reply about 3x higher. Connection cap about 100 per week per account.</div>
+        </div>
+      </div>
+
+    </section>
+    <!-- REPLY ENGINE -->
+    <section class="view od-wrap" id="view-replies">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Reply Engine</h1>
+          <p class="page-sub">What to do the moment someone answers. Paste what they wrote, get your reply, send it inside the hour.</p>
+        </div>
+      </div>
+
+      <div class="tk-note">
+        <strong>A reply stops the sequence.</strong> From that moment it is you, not a template chain. Every reply you will ever get lands in one of four buckets. Paste theirs below and this works out which one, then writes your answer. It never sends anything &mdash; you copy it and paste it into LinkedIn yourself.
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div style="font-weight:800; margin-bottom:6px;">Paste their reply. Get your answer</div>
+        <div class="small" style="color:var(--muted); margin-bottom:12px;">Paste what they wrote. This reads it, works out which of the four buckets it is, and writes your reply with their name already in it. You check it, copy it, and paste it into LinkedIn yourself. It never sends anything.</div>
+
+        <div class="od-grid2">
+          <div>
+            <label class="od-lab" style="margin-top:0">Who replied</label>
+            <select class="od-in" id="tk-rp-p"></select>
+            <label class="od-lab">Paste their message here</label>
+            <textarea class="od-in" id="tk-rp-in" rows="5" placeholder="Thanks for reaching out. Sounds interesting but what sort of cost are we talking?" style="resize:vertical; font-family:inherit;"></textarea>
+            <div class="od-btnrow">
+              <button class="od-btn" onclick="tkDraftReply()">Read it and draft my reply</button>
+              <button class="od-copy" style="margin-top:0" onclick="tkClearReply()">Clear</button>
+            </div>
+          </div>
+          <div>
+            <label class="od-lab" style="margin-top:0">Not the right bucket? Pick it yourself</label>
+            <div id="tk-rp-chips"></div>
+            <div class="small" style="color:var(--muted); margin-top:10px; line-height:1.6;">
+              It matches the words they used against the four buckets. It gets most replies right, but it is a word match, not a mind reader. Always read the draft before you send it.
+            </div>
+          </div>
+        </div>
+
+        <div id="tk-rp-result" style="margin-top:14px;"></div>
+      </div>
+
       <div class="card">
         <div style="font-weight:800; margin-bottom:6px;">When they reply. The four answers and what to send back</div>
         <div class="small" style="color:var(--muted); margin-bottom:14px;">A reply stops the sequence. From that moment it is you, not a template chain. Read the reply, pick the bucket it falls in, send the matching message inside the time rule below. Every reply lands in one of these four. One CTA throughout: book the demo.</div>
@@ -1812,71 +1923,8 @@ If you would rather not, no problem at all. I will reach out myself and mention 
           </div>
         </div>
       </div>
-
-      <div class="od-grid2">
-        <div class="card">
-          <div style="font-weight:800; margin-bottom:8px;">Volume planner</div>
-          <div class="small" style="color:var(--muted); margin-bottom:8px;">Set your pace. The tool flags anything over the safe weekly cap.</div>
-          <label class="od-lab">Senders (LinkedIn accounts)</label>
-          <input class="od-in" id="od-senders" type="number" value="1" min="1" oninput="od_vol()">
-          <label class="od-lab">Invites per day, per sender</label>
-          <input class="od-in" id="od-perday" type="number" value="16" min="1" oninput="od_vol()">
-          <label class="od-lab">Working days per week</label>
-          <input class="od-in" id="od-days" type="number" value="5" min="1" max="7" oninput="od_vol()">
-          <div style="margin-top:14px" class="od-grid3">
-            <div><div class="od-lab">Per week</div><div class="od-out" id="od-vweek">80</div></div>
-            <div><div class="od-lab">Per month</div><div class="od-out" id="od-vmonth">347</div></div>
-            <div><div class="od-lab">Safety</div><div id="od-vsafe"><span class="od-verdict od-green">safe</span></div></div>
-          </div>
-          <div class="small" style="color:var(--muted); margin-top:10px;" id="od-vproj"></div>
-        </div>
-
-        <div class="card">
-          <div style="font-weight:800; margin-bottom:8px;">Scorecard</div>
-          <div class="small" style="color:var(--muted); margin-bottom:8px;">Enter last month. Replace the benchmarks with your own numbers after the first ten calls.</div>
-          <div class="od-grid2">
-            <div><label class="od-lab">Invites sent</label><input class="od-in" id="od-s-inv" type="number" value="320" oninput="od_score()"></div>
-            <div><label class="od-lab">Accepted</label><input class="od-in" id="od-s-acc" type="number" value="128" oninput="od_score()"></div>
-            <div><label class="od-lab">Replies</label><input class="od-in" id="od-s-rep" type="number" value="26" oninput="od_score()"></div>
-            <div><label class="od-lab">Calls booked</label><input class="od-in" id="od-s-call" type="number" value="6" oninput="od_score()"></div>
-            <div><label class="od-lab">Clients won</label><input class="od-in" id="od-s-win" type="number" value="2" oninput="od_score()"></div>
-          </div>
-          <div style="margin-top:14px" class="od-grid3">
-            <div><div class="od-lab">Acceptance</div><div class="od-out" id="od-r-acc">40%</div><div id="od-v-acc"></div></div>
-            <div><div class="od-lab">Reply of accepted</div><div class="od-out" id="od-r-rep">20%</div><div id="od-v-rep"></div></div>
-            <div><div class="od-lab">Booked to client</div><div class="od-out" id="od-r-win">33%</div></div>
-          </div>
-          <div class="small" style="color:var(--muted); margin-top:10px;">Targets. Acceptance 40% or more. Reply 15% or more of accepted. Six calls a month lands about two clients. The 1,500 setup fee clears your acquisition cost on day one.</div>
-        </div>
-      </div>
-
-      <div class="od-grid2">
-        <div class="card">
-          <div style="font-weight:800; margin-bottom:8px;">Safety rules</div>
-          <div class="small" style="line-height:1.9;">
-            Warm up. Week 1 send 10 a day. Week 2 send 15. Week 3 onward send 20.<br>
-            Weekly cap about 100 per sender. Under 80 if the account is new or low trust.<br>
-            Spread invites across five working days. Never spike.<br>
-            Acceptance under 30% means stop and fix targeting.<br>
-            Reply under 10 to 15% at volume triggers quiet suppression.<br>
-            Withdraw pending invites older than two to three weeks.<br>
-            Best windows. Monday and Tuesday 9am to 12pm. Thursday for follow-ups.<br>
-            Keep your profile sharp. Photo and a value headline lift acceptance by up to 40%.
-          </div>
-        </div>
-        <div class="card">
-          <div style="font-weight:800; margin-bottom:8px;">Where AI fits</div>
-          <div class="small" style="line-height:1.9;">
-            Use AI for the research layer, not the writing. Find the signal, draft from it, you approve.<br>
-            AI-personalised first messages lift reply rates by about 60% over generic ones.<br>
-            Signals to detect. New in role. Hiring ops or admin. Growth or funding. Tool complaints. Productivity engagement.<br>
-            Content warms outreach. Post three to four times a week from the Content Engine so prospects see proof when they check your profile.
-          </div>
-          <div class="small" style="color:var(--muted); margin-top:10px;">Sources. 2026 practitioner data and YouTube walkthroughs on signal-based outreach. Benchmarks. LinkedIn reply about 10.3% average, cold email about 5.1%. Signal-referencing messages reply about 3x higher. Connection cap about 100 per week per account.</div>
-        </div>
-      </div>
-
     </section>
+
 
     <section class="view od-wrap" id="view-tracker">
       <div class="page-header">
@@ -2017,32 +2065,6 @@ If you would rather not, no problem at all. I will reach out myself and mention 
         </div>
       </div>
 
-      <div class="card" style="margin-top:16px">
-        <div style="font-weight:800; margin-bottom:6px;">Step 4. Someone replied. Draft the answer</div>
-        <div class="small" style="color:var(--muted); margin-bottom:12px;">Paste what they wrote. This reads it, works out which of the four buckets it is, and writes your reply with their name already in it. You check it, copy it, and paste it into LinkedIn yourself. It never sends anything.</div>
-
-        <div class="od-grid2">
-          <div>
-            <label class="od-lab" style="margin-top:0">Who replied</label>
-            <select class="od-in" id="tk-rp-p"></select>
-            <label class="od-lab">Paste their message here</label>
-            <textarea class="od-in" id="tk-rp-in" rows="5" placeholder="Thanks for reaching out. Sounds interesting but what sort of cost are we talking?" style="resize:vertical; font-family:inherit;"></textarea>
-            <div class="od-btnrow">
-              <button class="od-btn" onclick="tkDraftReply()">Read it and draft my reply</button>
-              <button class="od-copy" style="margin-top:0" onclick="tkClearReply()">Clear</button>
-            </div>
-          </div>
-          <div>
-            <label class="od-lab" style="margin-top:0">Not the right bucket? Pick it yourself</label>
-            <div id="tk-rp-chips"></div>
-            <div class="small" style="color:var(--muted); margin-top:10px; line-height:1.6;">
-              It matches the words they used against the four buckets. It gets most replies right, but it is a word match, not a mind reader. Always read the draft before you send it.
-            </div>
-          </div>
-        </div>
-
-        <div id="tk-rp-result" style="margin-top:14px;"></div>
-      </div>
 
       <div class="card" style="margin-top:16px; overflow-x:auto">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px; flex-wrap:wrap">
