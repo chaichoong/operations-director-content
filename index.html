@@ -2017,6 +2017,33 @@ If you would rather not, no problem at all. I will reach out myself and mention 
         </div>
       </div>
 
+      <div class="card" style="margin-top:16px">
+        <div style="font-weight:800; margin-bottom:6px;">Step 4. Someone replied. Draft the answer</div>
+        <div class="small" style="color:var(--muted); margin-bottom:12px;">Paste what they wrote. This reads it, works out which of the four buckets it is, and writes your reply with their name already in it. You check it, copy it, and paste it into LinkedIn yourself. It never sends anything.</div>
+
+        <div class="od-grid2">
+          <div>
+            <label class="od-lab" style="margin-top:0">Who replied</label>
+            <select class="od-in" id="tk-rp-p"></select>
+            <label class="od-lab">Paste their message here</label>
+            <textarea class="od-in" id="tk-rp-in" rows="5" placeholder="Thanks for reaching out. Sounds interesting but what sort of cost are we talking?" style="resize:vertical; font-family:inherit;"></textarea>
+            <div class="od-btnrow">
+              <button class="od-btn" onclick="tkDraftReply()">Read it and draft my reply</button>
+              <button class="od-copy" style="margin-top:0" onclick="tkClearReply()">Clear</button>
+            </div>
+          </div>
+          <div>
+            <label class="od-lab" style="margin-top:0">Not the right bucket? Pick it yourself</label>
+            <div id="tk-rp-chips"></div>
+            <div class="small" style="color:var(--muted); margin-top:10px; line-height:1.6;">
+              It matches the words they used against the four buckets. It gets most replies right, but it is a word match, not a mind reader. Always read the draft before you send it.
+            </div>
+          </div>
+        </div>
+
+        <div id="tk-rp-result" style="margin-top:14px;"></div>
+      </div>
+
       <div class="card" style="margin-top:16px; overflow-x:auto">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px; flex-wrap:wrap">
           <div style="font-weight:800;">Prospect list</div>
@@ -5996,6 +6023,137 @@ function tkLogTouch(){
   toast('Touch logged. Next step set for ' + p.next + '.', 'green');
 }
 
+/* ---- Reply engine. Matches their words to one of the four buckets, then
+   writes the reply. No AI, no server, no key. It never sends anything. ---- */
+const TK_REPLY = [
+  {
+    key: 'Positive',
+    tie: 4,
+    goal: 'They are interested. One link, no re-sell, no second ask.',
+    status: 'Replied',
+    clock: 'Answer within 1 working hour.',
+    words: ['sounds interesting','sounds good','send it over','send it across','send over','send it','happy to','happy to chat','go on then','would love','love to','id be keen','i would be keen','keen to','why not','yes please','please do','tell me when','book me','sign me up','lets do','let\'s do','lets have','let\'s have','worth a chat','up for'],
+    small: ['yes','yeah','yep','sure','interested','keen','ok','okay','definitely','absolutely'],
+    t: 'Great, [name]. Here is the link: https://operationsdirector.co.uk/book-a-demo/\n\nGrab any slot that suits you. 30 minutes, no pitch. You leave with the first three jobs mapped that AI can take off you, whether or not you go any further.\n\nIf nothing on there works, send me two times that do and I will make one of them fit.'
+  },
+  {
+    key: 'Question',
+    tie: 3,
+    goal: 'They want to know something first. Answer short, then bridge to the demo.',
+    status: 'Replied',
+    clock: 'Answer within 1 working hour if you can, same working day at the latest.',
+    words: ['how much','what does it cost','what sort of cost','whats the cost','what is the cost','ballpark','price','pricing','how long does','how long would','how does it work','how would it work','what exactly','what does that','does it work with','will it work with','integrate','integration','is it just another','what is involved','whats involved','more information','more info','tell me more','can you explain','what would that look'],
+    small: ['cost','xero','quickbooks','sage','hubspot','pipedrive','monday','notion','trello','slack'],
+    t: 'Fair question, [name]. Short answer: [straight answer, one or two sentences, no waffle].\n\nThe proper answer depends on how your week actually runs, and that is exactly what the demo is for. 30 minutes, free, no pitch, and you leave with the first three jobs mapped either way.\n\nHere is the link: https://operationsdirector.co.uk/book-a-demo/\n\nAnything else you want to know before you book, just ask here.'
+  },
+  {
+    key: 'Not now',
+    tie: 2,
+    goal: 'Wrong time, not wrong fit. Do not push. Get a named month.',
+    status: 'Nurture',
+    clock: 'Answer same working day.',
+    words: ['not right now','not at the moment','not currently','not until','not till','not this side of','right now is','bad time','wrong time','too much on','got a lot on','flat out','mid way','midway','in the middle of','middle of a','next year','new year','after christmas','after the summer','end of the year','year end','financial year','revisit','circle back','come back to me','check back','ask me again','get back to me in','maybe later','further down the line','down the line','in a few months','not a priority','on the back burner'],
+    small: ['january','february','march','april','september','october','november','december','q1','q2','q3','q4','busy','swamped'],
+    t: 'No problem at all, [name]. Wrong time is wrong time.\n\nTwo quick things and I will leave you to it. Can I drop you a line in [month]? And I will send over the Founder to Free guide now, no cost, so it is sitting there when the time is right.\n\nEither way I will keep an eye on your posts. Good luck with [the thing they mentioned].'
+  },
+  {
+    key: 'Referral',
+    tie: 1,
+    goal: 'Not them. Ask for the introduction, not just the name.',
+    status: 'Not a fit',
+    clock: 'Answer same working day.',
+    words: ['not the right person','not really me','not me you want','wrong person','you want to speak','you should speak','you need to speak','best person','better person','speak to my','talk to my','my business partner','my co founder','my co-founder','my colleague','our operations','our ops','ops manager','office manager','put you in touch','introduce you','pass this on','passed this on','forward this','i will forward','ill forward','copying in','cc you'],
+    small: ['partner','colleague','manager','director'],
+    t: 'Thanks [name], that is genuinely helpful.\n\nWould you be happy to introduce me to [referral name]? One line from you carries far more weight than anything I send cold. Something as simple as: "Kevin runs AI systems that take the everyday admin off founder-led firms. Worth 30 minutes."\n\nIf you would rather not, no problem at all. I will reach out myself and mention you pointed me their way.'
+  }
+];
+
+/* Score every bucket. Multi-word phrases count double because they are far
+   less likely to be a coincidence. Ties break in list order, which is why
+   Not now and Referral sit below Question: "yes, but next year" is a Not now. */
+function tkScoreReply(text){
+  const t = ' ' + (text||'').toLowerCase().replace(/[’]/g, "'").replace(/\s+/g,' ') + ' ';
+  return TK_REPLY.map(function(b, i){
+    let score = 0, hits = [];
+    b.words.forEach(function(w){ if(t.indexOf(w) !== -1){ score += 2; hits.push(w); } });
+    b.small.forEach(function(w){
+      if(new RegExp('\\b' + w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '\\b').test(t)){ score += 1; hits.push(w); }
+    });
+    if(b.key === 'Question' && t.indexOf('?') !== -1) score += 1;
+    return { i: i, b: b, score: score, hits: hits };
+  }).sort(function(x,y){ return y.score - x.score || x.b.tie - y.b.tie; });
+}
+
+function tkDraftReply(){
+  const txt = (document.getElementById('tk-rp-in').value || '').trim();
+  if(!txt){ toast('Paste their message first.', 'amber'); return; }
+  const ranked = tkScoreReply(txt);
+  if(ranked[0].score === 0){
+    toast('No clear match. Pick the bucket yourself.', 'amber');
+    tkRenderReply(-1, ranked);
+    return;
+  }
+  tkRenderReply(ranked[0].i, ranked);
+}
+
+function tkForceBucket(i){ tkRenderReply(i, tkScoreReply(document.getElementById('tk-rp-in').value || '')); }
+
+function tkRenderReply(idx, ranked){
+  const box = document.getElementById('tk-rp-result');
+  const chips = document.getElementById('tk-rp-chips');
+  if(chips){
+    chips.innerHTML = TK_REPLY.map(function(b, i){
+      const on = i === idx ? ' style="border-color:var(--accent); color:#fff;"' : '';
+      return '<span class="tm-link"' + on + ' onclick="tkForceBucket(' + i + ')">' + escapeHtml(b.key) + '</span>';
+    }).join('');
+  }
+  if(idx < 0){
+    box.innerHTML = '<div class="tk-note" style="margin-bottom:0">Nothing in that message matched a bucket clearly. Read it yourself and pick one of the four above. If it is genuinely none of them, it is probably a Question.</div>';
+    return;
+  }
+  const b = TK_REPLY[idx];
+  const p = TK.list.find(function(x){ return x.id === document.getElementById('tk-rp-p').value; });
+  const top = ranked.filter(function(r){ return r.i === idx; })[0] || { score: 0, hits: [] };
+  const sure = top.score >= 4 ? 'Confident' : top.score >= 2 ? 'Fairly sure' : 'Low confidence, check it';
+  const why = top.hits.length ? 'Matched on: ' + top.hits.slice(0,4).map(escapeHtml).join(', ') : 'No strong word match. You picked this one.';
+  const draft = p ? tkFill(b.t, p) : b.t;
+
+  box.innerHTML =
+      '<div class="od-step" style="margin-bottom:0">'
+    + '<div class="od-when">' + escapeHtml(b.key) + ' &middot; ' + escapeHtml(sure) + '</div>'
+    + '<div class="od-goal">' + escapeHtml(b.goal) + ' <span style="color:var(--muted)">' + escapeHtml(why) + '</span></div>'
+    + '<div class="od-msg" id="tk-rp-out">' + escapeHtml(draft) + '</div>'
+    + '<div class="od-btnrow">'
+    + '<button class="od-btn" onclick="tkApproveReply(' + idx + ')">Approve and copy</button>'
+    + '<button class="od-copy" style="margin-top:0" onclick="od_copy(\'tk-rp-out\')">Copy only</button>'
+    + '</div>'
+    + '<div class="small" style="color:var(--muted); margin-top:8px;">' + escapeHtml(b.clock) + ' Approve and copy also sets this person to <strong>' + escapeHtml(b.status) + '</strong> in the list below. Anything still in [square brackets] is yours to fill in before you send.</div>'
+    + '</div>';
+}
+
+function tkApproveReply(idx){
+  const b = TK_REPLY[idx];
+  const el = document.getElementById('tk-rp-out');
+  if(!el){ return; }
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(el.innerText); }
+  const p = TK.list.find(function(x){ return x.id === document.getElementById('tk-rp-p').value; });
+  if(p){
+    p.status = b.status;
+    p.notes = ((p.notes ? p.notes + ' | ' : '') + b.key + ' reply answered ' + tkToday()).slice(0, 500);
+    tkSave(); tkRender(); tkKpis();
+    toast('Copied. ' + p.name.split(' ')[0] + ' set to ' + b.status + '. Paste it into LinkedIn now.', 'green');
+  } else {
+    toast('Copied. Paste it into LinkedIn now.', 'green');
+  }
+}
+
+function tkClearReply(){
+  document.getElementById('tk-rp-in').value = '';
+  document.getElementById('tk-rp-result').innerHTML = '';
+  const chips = document.getElementById('tk-rp-chips');
+  if(chips){ chips.innerHTML = TK_REPLY.map((b,i)=>'<span class="tm-link" onclick="tkForceBucket('+i+')">'+escapeHtml(b.key)+'</span>').join(''); }
+}
+
 function tkSet(id, field, val){
   const p = TK.list.find(x => x.id === id); if(!p) return;
   if(field === 'step') val = parseInt(val,10);
@@ -6104,6 +6262,18 @@ function tkRender(){
   const sSel = document.getElementById('tk-mb-s');
   if(!sSel.options.length){ sSel.innerHTML = TK_SEQ.map((s,i)=>'<option value="'+i+'">'+escapeHtml((i+1)+'. '+s.k)+'</option>').join(''); }
   tkBuild();
+
+  // Reply engine dropdown and bucket chips
+  const rSel = document.getElementById('tk-rp-p');
+  if(rSel){
+    const rPrev = rSel.value;
+    rSel.innerHTML = pSel.innerHTML;
+    if(TK.list.find(p=>p.id===rPrev)) rSel.value = rPrev;
+  }
+  const chips = document.getElementById('tk-rp-chips');
+  if(chips && !chips.innerHTML){
+    chips.innerHTML = TK_REPLY.map((b,i)=>'<span class="tm-link" onclick="tkForceBucket('+i+')">'+escapeHtml(b.key)+'</span>').join('');
+  }
 }
 
 function tkCsvCell(v){ v = (v==null?'':String(v)); return '"' + v.replace(/"/g,'""') + '"'; }
