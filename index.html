@@ -1068,6 +1068,125 @@
   .logo-uploader-actions label.btn { cursor: pointer; display: inline-flex; align-items: center; }
   .logo-uploader-actions input[type="file"] { display: none; }
 </style>
+
+<style id="og-guide-styles">
+  /* ===================================================================
+     VISUAL GUIDES
+     Per-page overview strip + click-through tour. All of this is driven
+     by the PAGE_GUIDES object at the bottom of the file — no page needs
+     its own markup.
+     =================================================================== */
+
+  /* --- "Guide" button injected into every .page-header --- */
+  .og-guide-btn { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .og-guide-btn .og-q {
+    width: 16px; height: 16px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; background: var(--accent); color: #0b1020;
+  }
+  .og-guide-btn.is-unseen { border-color: var(--accent); color: #fff; animation: og-pulse 2.6s ease-in-out infinite; }
+  @keyframes og-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(108, 140, 255, 0.5); }
+    55%      { box-shadow: 0 0 0 8px rgba(108, 140, 255, 0); }
+  }
+
+  /* --- Visual overview panel --- */
+  .og-panel {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--panel); margin: 0 0 22px; overflow: hidden;
+  }
+  .og-panel-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; cursor: pointer; user-select: none;
+  }
+  .og-panel-head:hover { background: var(--panel-2); }
+  .og-panel-icon {
+    width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: #0b1020;
+  }
+  .og-panel-title { font-weight: 700; font-size: 13.5px; }
+  .og-panel-purpose { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
+  .og-panel-chev { margin-left: auto; flex-shrink: 0; color: var(--muted); font-size: 11px; transition: transform 0.2s; }
+  .og-panel.is-open .og-panel-chev { transform: rotate(180deg); }
+  .og-panel-body { display: none; padding: 14px 16px 16px; border-top: 1px solid var(--line); }
+  .og-panel.is-open .og-panel-body { display: block; }
+
+  .og-flow { display: grid; gap: 10px; grid-template-columns: repeat(var(--og-n, 4), 1fr); }
+  @media (max-width: 1100px) { .og-flow { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .og-flow { grid-template-columns: 1fr; } }
+  .og-step {
+    position: relative; background: var(--panel-2); border: 1px solid var(--line);
+    border-radius: 10px; padding: 12px 13px; cursor: pointer; text-align: left;
+    color: var(--text); font: inherit; transition: border-color 0.15s, transform 0.05s;
+  }
+  .og-step:hover { border-color: var(--accent); }
+  .og-step:active { transform: translateY(1px); }
+  .og-step-n {
+    width: 20px; height: 20px; border-radius: 999px; background: var(--accent);
+    color: #0b1020; font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
+  }
+  .og-step-label { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .og-step-text { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .og-step::after {
+    content: '\203A'; position: absolute; right: -11px; top: 50%;
+    transform: translateY(-50%); color: var(--line); font-size: 20px; line-height: 1;
+  }
+  .og-step:last-child::after { content: none; }
+  @media (max-width: 1100px) { .og-step::after { content: none; } }
+
+  .og-panel-foot {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--line);
+  }
+  .og-panel-hint { font-size: 12px; color: var(--muted); }
+
+  /* --- Tour overlay --- */
+  .og-block { position: fixed; inset: 0; z-index: 1400; display: none; }
+  .og-block.show { display: block; }
+  .og-spot {
+    position: fixed; z-index: 1401; border-radius: 10px; pointer-events: none;
+    /* The ring must be listed first so the dim layer paints behind it. */
+    box-shadow: 0 0 0 2px var(--accent),
+                0 0 18px 3px rgba(108, 140, 255, 0.4),
+                0 0 0 9999px rgba(5, 9, 22, 0.84);
+  }
+  .og-spot.is-centred { box-shadow: 0 0 0 9999px rgba(5, 9, 22, 0.86); }
+  .og-pop {
+    position: fixed; z-index: 1402; width: min(370px, calc(100vw - 32px));
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 18px 14px; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  }
+  .og-pop.is-enter { animation: og-pop-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1); }
+  @keyframes og-pop-in { from { opacity: 0; transform: translateY(6px) scale(0.98); } }
+  .og-pop-kicker { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--accent); font-weight: 800; }
+  .og-pop-title { font-size: 15.5px; font-weight: 700; margin: 5px 0 6px; letter-spacing: -0.2px; }
+  .og-pop-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .og-pop-nav { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .og-dots { display: flex; gap: 5px; margin-right: auto; }
+  .og-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--line); border: none; padding: 0; cursor: pointer; transition: width 0.2s; }
+  .og-dot.is-on { background: var(--accent); width: 16px; }
+  .og-pop-x {
+    position: absolute; top: 10px; right: 12px; background: none; border: none;
+    color: var(--muted); font-size: 17px; line-height: 1; cursor: pointer; padding: 2px 4px;
+  }
+  .og-pop-x:hover { color: var(--text); }
+
+  /* --- Sidebar help block --- */
+  .og-help { margin-top: 14px; padding: 12px 13px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; }
+  .og-help-t { font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .og-help button {
+    display: block; width: 100%; text-align: left; background: transparent;
+    border: none; color: var(--muted); font-size: 11.5px; padding: 4px 0; cursor: pointer;
+  }
+  .og-help button:hover { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .og-guide-btn.is-unseen, .og-pop.is-enter { animation: none; }
+  }
+</style>
 </head>
 <body>
 <div class="app">
@@ -6337,6 +6456,703 @@ function tkImportCsv(evt){
 tkLoad();
 tkRenderHbSearch();
 tkRender();
+</script>
+
+<script>
+/* =====================================================================
+   VISUAL GUIDES
+   ---------------------------------------------------------------------
+   Every page gets two things, both generated from PAGE_GUIDES below:
+
+     1. A "How this page works" panel under the page title — a numbered
+        visual overview of the page's workflow. Click any step to jump
+        into the tour at that point.
+     2. A click-through tour — spotlights the real controls on the page
+        one at a time and explains each one.
+
+   Adding a guide to a new page means adding one entry to PAGE_GUIDES.
+   No page needs any markup of its own, which is what makes this
+   portable to the Supabase build later.
+   ===================================================================== */
+(function () {
+  'use strict';
+
+  /* ---------------------------------------------------------------
+     CONTENT — one entry per view id (matches nav-item data-view)
+     tour steps: { target, climb, title, body }
+       target — CSS selector for the element to spotlight (null = centred)
+       climb  — optional ancestor selector to spotlight instead
+     flow steps: { label, text, at } where `at` is an index into tour
+     --------------------------------------------------------------- */
+  var PAGE_GUIDES = {
+
+    dashboard: {
+      title: 'Launch dashboard',
+      purpose: 'Your control room. Every number here rolls up from the pages in the menu — start the day on this page and let it tell you where to go.',
+      flow: [
+        { label: 'Read the four numbers', text: 'Posts planned, waiting on you, approved, and sent back for a rewrite.', at: 2 },
+        { label: 'Clear what is waiting', text: 'Anything in "Awaiting review" is blocking the queue. That is your job today.', at: 3 },
+        { label: 'Work the task map', text: 'Six launch tasks, each with a done-test. Red means not started yet.', at: 4 },
+        { label: 'Open the week', text: 'Week 1 is produced in full. Jump into the calendar to read and approve it.', at: 5 }
+      ],
+      tour: [
+        { target: null,
+          title: 'Welcome to the content engine',
+          body: 'This is a 60-second walkthrough of the dashboard. Use Next and Back, or the arrow keys. Press Esc at any point to stop — you can replay it whenever you like.' },
+        { target: '.sidebar .nav',
+          title: 'Everything lives in this menu',
+          body: 'Ten pages, in the order you actually use them: plan the content, review it, publish it, then measure it. Outreach and the tracker sit at the bottom.' },
+        { target: '#view-dashboard .grid-4',
+          title: 'The four numbers',
+          body: 'A live roll-up of the whole 30-day plan. If these look right, the engine is running. They update themselves as you approve posts.' },
+        { target: '#kpi-review', climb: '.card',
+          title: 'The only number that needs you',
+          body: 'Drafts the AI has written that nobody has signed off yet. While this is above zero, nothing new goes out. Clear it on the Review Queue page.' },
+        { target: '#view-dashboard .tm-table', climb: '.card',
+          title: 'The task map',
+          body: 'The six launch tasks, which page each one lives on, and a done-test so there is no guessing. Click any page name in this table to jump straight there.' },
+        { target: '#week1-strip', climb: '.card',
+          title: 'Week 1, produced in full',
+          body: 'Proof the system works before you commit to thirty days. Read these seven posts first — if the voice is right, the other twenty-three will be too.' },
+        { target: null,
+          title: 'That is the dashboard',
+          body: 'Every other page has this same Guide button in its top-right corner, and the same "How this page works" panel under the title. Nothing here is hidden.' }
+      ]
+    },
+
+    calendar: {
+      title: '30-day content calendar',
+      purpose: 'The whole launch on one screen. Each square is a post, coloured by which of the four pillars it belongs to.',
+      flow: [
+        { label: 'Filter by pillar', text: 'Narrow to Pain, Proof, Product or Philosophy to check the mix.', at: 1 },
+        { label: 'Read the colours', text: 'The dot on each day tells you the pillar without opening anything.', at: 2 },
+        { label: 'Open a day', text: 'Click a square for the full draft, the SEO meta and the channels.', at: 3 },
+        { label: 'Approve to Buffer', text: 'Sign off a whole week in one click, or export the plan as a CSV.', at: 4 }
+      ],
+      tour: [
+        { target: null,
+          title: 'The 30-day calendar',
+          body: 'One square per day of the launch. The AI drafts every post in advance; your job is to read them and decide what goes out.' },
+        { target: '#view-calendar .filters',
+          title: 'Filter by pillar',
+          body: 'Four content pillars carry the launch. Use these chips to see one at a time — it is the fastest way to spot a week that is all Product and no Proof.' },
+        { target: '#view-calendar .legend',
+          title: 'What the colours mean',
+          body: 'Red is Pain, green is Proof, blue is Product, purple is Philosophy. Once you know the four, you can read a month at a glance.' },
+        { target: '#calendar-grid .cal-day:not(.empty)',
+          title: 'Click any day to open it',
+          body: 'Opens the full drafted post: the hook, the body, the SEO title and description, and which channels it goes to. From there you can approve it or send it back with a comment.' },
+        { target: '#view-calendar .page-header',
+          title: 'Approve a week at a time',
+          body: '"Approve week 1" signs off seven posts at once and queues them in Buffer. "Export CSV" gives you the whole plan as a spreadsheet for anyone who wants it offline.' }
+      ]
+    },
+
+    queue: {
+      title: 'Review queue',
+      purpose: 'Everything the AI has drafted that is waiting on a human. This is the page you clear — nothing publishes until it is empty.',
+      flow: [
+        { label: 'Scan the hooks', text: 'The first line of each post. If the hook is wrong, the post is wrong.', at: 1 },
+        { label: 'Check the mix', text: 'Pillar, format and channels are on every row, so you can spot repetition.', at: 2 },
+        { label: 'Open and decide', text: 'Approve it, or comment to send it back for a rewrite.', at: 3 },
+        { label: 'It moves on', text: 'Approved posts leave this list and appear in Buffer Sync.', at: 4 }
+      ],
+      tour: [
+        { target: null,
+          title: 'The review queue',
+          body: 'This is the human checkpoint. The AI writes; you decide. Nothing reaches a channel without passing through this page.' },
+        { target: '#view-queue table thead',
+          title: 'What each column tells you',
+          body: 'Day, hook, pillar, format, channels and status. You can judge most posts from the hook alone — that is why it sits second.' },
+        { target: '#queue-body tr:first-child',
+          title: 'One row per draft',
+          body: 'Click anywhere on a row to open the full post. Rows disappear from here as soon as you approve them.' },
+        { target: '#queue-body tr:first-child td:last-child',
+          title: 'Open, then approve or revise',
+          body: 'Approve pushes the post to Buffer. Requesting a revision sends it back with your comment attached, and the AI rewrites it against that note.' },
+        { target: '.nav-item[data-view="buffer"]',
+          title: 'Where approved posts go',
+          body: 'Straight to Buffer Sync. Once this queue is empty, that page is where you check everything is scheduled.' }
+      ]
+    },
+
+    pillars: {
+      title: 'Master content prompt & pillars',
+      purpose: 'The engine room. One master prompt writes every post; the four pillars vary a single step of it. Change the prompt here and the whole calendar changes voice.',
+      flow: [
+        { label: 'Read the master prompt', text: 'The instructions every generated post is written against.', at: 1 },
+        { label: 'Learn the five-step spine', text: 'Problem, sit in it, show the shift, offer the guide, book the demo.', at: 2 },
+        { label: 'Compare the four pillars', text: 'Each one reuses the spine and only varies step three.', at: 3 },
+        { label: 'Retune the voice', text: 'Copy the prompt, edit it, and every future post follows the new version.', at: 4 }
+      ],
+      tour: [
+        { target: null,
+          title: 'Where the writing comes from',
+          body: 'Nothing on this dashboard is written by hand. Every post comes out of the one prompt on this page — so this is the page you change when the voice is not right.' },
+        { target: '#master-prompt-block',
+          title: 'The master prompt',
+          body: 'The full brief the AI works to: audience, tone, banned phrases, UK English, and the call to action. Read it once and you will understand why every post sounds the way it does.' },
+        { target: '#view-pillars .page-sub',
+          title: 'The five-step spine',
+          body: 'Problem, sit in it, show the shift, offer the free guide, book the demo. Every single post follows this order. It is the reason the posts convert rather than just get read.' },
+        { target: '#pillars-grid',
+          title: 'Four pillars, one framework',
+          body: 'Pain, Proof, Product and Philosophy. Each reuses the master prompt and only changes step three — "show the shift". Open any card to see that pillar\'s exact variant.' },
+        { target: '#view-pillars .btn-ghost',
+          title: 'Copy it and retune',
+          body: 'Copy the prompt, adjust the wording, and paste it back into the source. Every post generated after that follows the new version — you retune thirty posts by editing one block of text.' }
+      ]
+    },
+
+    channels: {
+      title: 'Channels & cadence',
+      purpose: 'Which channel gets what, how often, and which ones are repurpose-only. One channel is driven to green; the rest just recycle what already worked.',
+      flow: [
+        { label: 'One channel to green', text: 'LinkedIn business page, posting daily. Everything points at it.', at: 1 },
+        { label: 'The rest repurpose', text: 'YouTube and the others reuse LinkedIn content. No original work.', at: 2 },
+        { label: 'Know the weekly shape', text: 'Long-form Mon/Wed/Fri, video Tue/Thu, teaser Sat, philosophy Sun.', at: 3 },
+        { label: 'Respect the rules', text: 'No Runpreneur mentions, every CTA goes to the booking calendar.', at: 4 }
+      ],
+      tour: [
+        { target: null,
+          title: 'Channels and cadence',
+          body: 'The most common launch mistake is spreading across five channels and getting nowhere on any of them. This page is the discipline that stops that.' },
+        { target: '#view-channels .grid-2 > .card:nth-child(1)',
+          title: 'LinkedIn is the one channel',
+          body: 'The business page posts daily and is the only channel actively worked. Get one channel to green before opening a second — that is the whole strategy.' },
+        { target: '#view-channels .grid-2 > .card:nth-child(2)',
+          title: 'Everything else repurposes',
+          body: 'YouTube and the rest only reuse what LinkedIn has already proven. No channel gets original production time until LinkedIn is working.' },
+        { target: '#view-channels .grid-2 > .card:nth-child(1) ul',
+          title: 'The weekly shape',
+          body: 'Long-form text and carousels on Monday, Wednesday and Friday. Video or infographic Tuesday and Thursday. A teaser Saturday, philosophy Sunday. Same shape every week, so it becomes a habit rather than a decision.' },
+        { target: '.nav-item[data-view="measure"]',
+          title: 'Then check it worked',
+          body: 'Cadence without measurement is just noise. Measurement tells you whether the shape above is actually producing bookings.' }
+      ]
+    },
+
+    buffer: {
+      title: 'Buffer sync',
+      purpose: 'The exit door. Approved posts leave the app here, get queued in Buffer, and their publish status flows back into this page.',
+      flow: [
+        { label: 'Connect Buffer', text: 'Paste an API token once. The connection is remembered.', at: 1 },
+        { label: 'Choose channels', text: 'Toggle off anything you do not want Buffer publishing to.', at: 2 },
+        { label: 'Push approved posts', text: 'One button sends everything signed off into the Buffer queue.', at: 3 },
+        { label: 'Watch status return', text: 'Queued, published or failed — it comes back into the table here.', at: 4 }
+      ],
+      tour: [
+        { target: null,
+          title: 'Buffer sync',
+          body: 'This is the only page that talks to the outside world. Everything else on the dashboard is planning; this is where posts actually leave.' },
+        { target: '#bf-token', climb: '.card',
+          title: 'Connect once',
+          body: 'Paste a Buffer API token and test the connection. You only do this once — after that, approved posts queue automatically.' },
+        { target: '#channel-toggles', climb: '.card',
+          title: 'Control which channels publish',
+          body: 'Toggle off any channel you are not ready to publish to. A post approved for four channels will only go to the ones switched on here — a useful safety catch while you are still finding the voice.' },
+        { target: '#view-buffer .page-header .btn',
+          title: 'Push approved posts',
+          body: 'Sends everything that has been signed off into the Buffer queue in one go. Posts that are still awaiting review are left behind deliberately.' },
+        { target: '#buffer-body', climb: '.card',
+          title: 'Status comes back to you',
+          body: 'Once a post is queued, Buffer reports back here: scheduled time and publish status. If something fails to publish, this is the table that tells you.' }
+      ]
+    },
+
+    measure: {
+      title: 'Measurement',
+      purpose: 'Did it work. Four numbers and the attribution model that makes them trustworthy rather than vanity.',
+      flow: [
+        { label: 'Reach', text: 'Impressions over the last 30 days across LinkedIn and YouTube.', at: 1 },
+        { label: 'Interest', text: 'Profile visits — people who saw a post and went looking for you.', at: 2 },
+        { label: 'The number that counts', text: 'Calendar bookings. Everything upstream exists to move this one.', at: 3 },
+        { label: 'The cost of it', text: 'Cost per booking. Posts are free, so the real cost is your time.', at: 4 }
+      ],
+      tour: [
+        { target: null,
+          title: 'Measurement',
+          body: 'Four numbers, deliberately. Impressions and profile visits tell you the content is landing; bookings tell you it is working; cost per booking tells you whether it is worth continuing.' },
+        { target: '#view-measure .grid-4 > .card:nth-child(1)',
+          title: 'Impressions',
+          body: 'Total reach over 30 days, pulled from LinkedIn and YouTube once the channels are live. Useful as a trend, meaningless on its own.' },
+        { target: '#view-measure .grid-4 > .card:nth-child(2)',
+          title: 'Profile visits',
+          body: 'People who read a post and then went looking for the business page. This is the first real signal of interest, and it moves before bookings do.' },
+        { target: '#view-measure .grid-4 > .card:nth-child(3)',
+          title: 'Calendar bookings',
+          body: 'The only number that pays. Every post links to the booking page with a UTM tag, so each booking can be traced back to the exact post that caused it.' },
+        { target: '#view-measure .grid-4 > .card:nth-child(4)',
+          title: 'Cost per booking',
+          body: 'Posting costs nothing, so the cost here is time. Watching this fall is how you know the engine is getting more efficient rather than just louder.' },
+        { target: '#view-measure > .card',
+          title: 'How attribution works',
+          body: 'Every link carries a UTM tag with the channel, the campaign and the day number. Bookings inherit it, so cost per booking is attributable per channel and per pillar — not guessed.' }
+      ]
+    },
+
+    outreach: {
+      title: 'LinkedIn Outreach',
+      purpose: 'The playbook. Who to message, the seven-touch sequence over eighteen days, the exact words, and the safety limits that keep the account alive.',
+      flow: [
+        { label: 'Know who you message', text: 'Founder-led UK firms, two to fifty staff, with a real signal.', at: 1 },
+        { label: 'Run the seven touches', text: 'Warm up, connect, question, offer the guide, then the demo.', at: 2 },
+        { label: 'Use the written words', text: 'Templates for the invite, the hot-buttons and all four replies.', at: 3 },
+        { label: 'Stay inside the limits', text: 'Volume planner and scorecard tell you what is safe and what is working.', at: 4 }
+      ],
+      tour: [
+        { target: null,
+          title: 'The outreach playbook',
+          body: 'This page is the theory and the words. The Outreach Tracker next door is where you actually run it. Read this once, then work from the tracker.' },
+        { target: '#view-outreach .card:nth-of-type(2)',
+          title: 'Who we message',
+          body: 'Founder, owner, CEO or MD. Founder-led rather than PE-owned. Two to fifty staff. And critically — a real signal you actually saw. No signal, no message.' },
+        { target: '#od-t1', climb: '.card',
+          title: 'The seven-touch sequence',
+          body: 'Eighteen days, seven touches. It starts with a comment on their post, not a message. Never pitch in the connection invite — that is the single biggest reason invites get ignored.' },
+        { target: '#od-hb1', climb: '.card',
+          title: 'The hot-button templates',
+          body: 'Three ready-written openers built around the pains founders actually post about. Copy one, swap in their name and their real signal, send it by hand.' },
+        { target: '#od-rp1', climb: '.card',
+          title: 'What to send when they reply',
+          body: 'Replies fall into four buckets: interested, a question, not now, and a brush-off. There is a written answer for each, so you are never composing under pressure.' },
+        { target: '#od-senders', climb: '.card',
+          title: 'The volume planner',
+          body: 'Work out how many invites a week you can send before LinkedIn considers it spam. The safety verdict turns amber then red as you push past what is sensible.' },
+        { target: '#od-s-inv', climb: '.card',
+          title: 'The scorecard',
+          body: 'Acceptance above 40% and replies above 15% mean the targeting and the words are right. If acceptance is low it is your targeting; if replies are low it is your opener.' }
+      ]
+    },
+
+    tracker: {
+      title: 'Outreach Tracker',
+      purpose: 'The CRM for the outreach engine. Build the 60-row target list, log every touch, and let the funnel numbers tell you what to fix.',
+      flow: [
+        { label: 'Find real people', text: 'Sales Navigator or post search. You must see a real signal first.', at: 2 },
+        { label: 'Add the prospect', text: 'No real signal, no row. That rule is what stops it becoming spam.', at: 3 },
+        { label: 'Build the message', text: 'Pick a person and a step; it writes the message with their signal in it.', at: 4 },
+        { label: 'Draft the reply', text: 'Paste what they sent, get a reply back in the right bucket.', at: 5 }
+      ],
+      tour: [
+        { target: null,
+          title: 'The outreach tracker',
+          body: 'Four numbered steps, top to bottom. Work down the page and you have run a day of outreach properly.' },
+        { target: '#view-tracker .tk-note',
+          title: 'Read this before anything else',
+          body: 'You send every message by hand, on LinkedIn. This app finds people and writes the words — it never sends anything. Bots get pages blocked, and the page is the asset.' },
+        { target: '#tk-hb-search', climb: '.card',
+          title: 'Step 1 — find real people',
+          body: 'Click a pain and it opens LinkedIn showing people posting about it right now. That post is your signal. Copy their exact words — the specificity is what earns the reply.' },
+        { target: '#tk-signal', climb: '.card',
+          title: 'Step 2 — add the prospect',
+          body: 'The signal field is required on purpose. If you did not genuinely see it, you cannot add the row. That one rule is the difference between outreach and spam.' },
+        { target: '#tk-mb-out', climb: '.card',
+          title: 'Step 3 — build the message',
+          body: 'Pick the person and which of the seven steps you are on. It writes the message with their name and their real signal already in it. Copy, paste into LinkedIn, send, then log the touch.' },
+        { target: '#tk-rp-in', climb: '.card',
+          title: 'Step 4 — they replied',
+          body: 'Paste what they wrote. It works out which of the four buckets the reply falls into and drafts your answer. It is a word match, not a mind reader — always read the draft before you send it.' },
+        { target: '#view-tracker .grid-4',
+          title: 'The numbers that tell you to stop worrying',
+          body: 'Rows built, touches logged today, people mid-sequence, and the replies/bookings/wins funnel. If rows is under 60, everything downstream is a rounding error — build the list first.' },
+        { target: '#tk-table', climb: '.card',
+          title: 'The prospect list',
+          body: 'Your whole pipeline. Update status and sequence step inline as you go, and export to CSV whenever you want it out of the browser.' }
+      ]
+    },
+
+    comparison: {
+      title: 'Comparison pages',
+      purpose: 'Decision-stage landing pages. Someone searching "Operations Director vs a VA" is not learning, they are choosing — these pages help them choose, honestly.',
+      flow: [
+        { label: 'Start in plain English', text: 'The whole proposition in thirty seconds, no jargon.', at: 1 },
+        { label: 'Lay out the four options', text: 'VA, agency, hire, or Operations Director — fairly compared.', at: 2 },
+        { label: 'Show the real numbers', text: 'Side-by-side tables with an honest concession in each one.', at: 3 },
+        { label: 'Answer and close', text: 'Objections handled, then one call to action: book the demo.', at: 4 }
+      ],
+      tour: [
+        { target: null,
+          title: 'The "vs" page set',
+          body: 'The highest-intent traffic you will ever get. These pages are written to be genuinely useful even to someone who ends up choosing a competitor — which is exactly why they convert.' },
+        { target: '#view-comparison .cmp-plain',
+          title: 'In plain English first',
+          body: 'Before any comparison, the whole proposition in thirty seconds with no jargon. If a reader bounces after this paragraph, they were never going to buy.' },
+        { target: '#view-comparison .cmp-pick',
+          title: 'The four honest options',
+          body: 'VA, agency, hire someone, or Operations Director. Each one gets a fair description including when it genuinely is the better choice. That honesty is the persuasion.' },
+        { target: '#view-comparison .cmp-scroll',
+          title: 'The real numbers',
+          body: 'Side-by-side on the criteria that actually decide it — cost, ramp-up time, what happens when someone leaves. Every table includes a concession where the alternative wins.' },
+        { target: '#view-comparison .cmp-cta',
+          title: 'One call to action',
+          body: 'Every page ends the same way: book the demo. No pricing page, no contact form, no newsletter. One decision to make.' }
+      ]
+    }
+  };
+
+  /* ---------------------------------------------------------------
+     Storage (never throws — private mode, blocked cookies, etc.)
+     --------------------------------------------------------------- */
+  var PREFIX = 'og.';
+  function get(k) { try { return window.localStorage.getItem(PREFIX + k); } catch (e) { return null; } }
+  function set(k, v) { try { window.localStorage.setItem(PREFIX + k, v); } catch (e) { /* no-op */ } }
+  function clearAll() {
+    try {
+      Object.keys(window.localStorage)
+        .filter(function (k) { return k.indexOf(PREFIX) === 0; })
+        .forEach(function (k) { window.localStorage.removeItem(k); });
+    } catch (e) { /* no-op */ }
+  }
+
+  function tourDone(view) { return get('tour.' + view) === '1'; }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     Build: guide button + overview panel on every page
+     --------------------------------------------------------------- */
+
+  // Find (or create) the right-hand action area of a .page-header, so the
+  // Guide button sits with whatever buttons the page already has.
+  function headerHost(head) {
+    var kids = Array.prototype.filter.call(head.children, function (n) { return n.nodeType === 1; });
+    if (kids.length >= 2) {
+      var last = kids[kids.length - 1];
+      if (last.tagName === 'DIV') return last;
+      // The page put a bare button in the header — wrap it so ours lines up.
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'display:flex; gap:8px; align-items:center; flex-wrap:wrap;';
+      head.insertBefore(wrap, last);
+      wrap.appendChild(last);
+      return wrap;
+    }
+    var host = document.createElement('div');
+    host.style.cssText = 'display:flex; gap:8px; align-items:center; flex-wrap:wrap;';
+    head.appendChild(host);
+    return host;
+  }
+
+  function buildPage(view, guide) {
+    var section = document.getElementById('view-' + view);
+    if (!section) return;
+    var head = section.querySelector('.page-header');
+    if (!head) return;
+
+    // --- Guide button ---
+    var btn = document.createElement('button');
+    btn.className = 'btn btn-ghost btn-sm og-guide-btn';
+    btn.id = 'og-btn-' + view;
+    btn.type = 'button';
+    btn.innerHTML = '<span class="og-q">?</span> Guide';
+    btn.title = 'Show the visual guide for this page';
+    if (!tourDone(view)) btn.classList.add('is-unseen');
+    btn.onclick = function () { openTour(view, 0); };
+    headerHost(head).appendChild(btn);
+
+    // --- Overview panel ---
+    var open = get('panel.' + view);
+    if (open === null) open = tourDone(view) ? '0' : '1';   // open until they've done the tour
+
+    var panel = document.createElement('div');
+    panel.className = 'og-panel' + (open === '1' ? ' is-open' : '');
+    panel.id = 'og-panel-' + view;
+
+    var steps = guide.flow.map(function (s, i) {
+      return '<button type="button" class="og-step" data-at="' + s.at + '">' +
+               '<div class="og-step-n">' + (i + 1) + '</div>' +
+               '<div class="og-step-label">' + esc(s.label) + '</div>' +
+               '<div class="og-step-text">' + esc(s.text) + '</div>' +
+             '</button>';
+    }).join('');
+
+    panel.innerHTML =
+      '<div class="og-panel-head" role="button" tabindex="0" aria-expanded="' + (open === '1') + '">' +
+        '<div class="og-panel-icon">◱</div>' +
+        '<div>' +
+          '<div class="og-panel-title">How this page works</div>' +
+          '<div class="og-panel-purpose">' + esc(guide.purpose) + '</div>' +
+        '</div>' +
+        '<div class="og-panel-chev">▼</div>' +
+      '</div>' +
+      '<div class="og-panel-body">' +
+        '<div class="og-flow" style="--og-n:' + guide.flow.length + '">' + steps + '</div>' +
+        '<div class="og-panel-foot">' +
+          '<button type="button" class="btn btn-sm og-panel-tour">Take the guided tour →</button>' +
+          '<span class="og-panel-hint">Or click any step above to jump straight to it on the page.</span>' +
+        '</div>' +
+      '</div>';
+
+    head.insertAdjacentElement('afterend', panel);
+
+    var headEl = panel.querySelector('.og-panel-head');
+    function toggle() {
+      var nowOpen = !panel.classList.contains('is-open');
+      panel.classList.toggle('is-open', nowOpen);
+      headEl.setAttribute('aria-expanded', String(nowOpen));
+      set('panel.' + view, nowOpen ? '1' : '0');
+    }
+    headEl.addEventListener('click', toggle);
+    headEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+    panel.querySelector('.og-panel-tour').onclick = function () { openTour(view, 0); };
+    panel.querySelectorAll('.og-step').forEach(function (el) {
+      el.onclick = function () { openTour(view, parseInt(el.dataset.at, 10) || 0); };
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     Tour engine
+     --------------------------------------------------------------- */
+  var block, spot, pop, raf = null;
+  var state = { view: null, steps: [], i: 0, open: false };
+
+  function resolve(step) {
+    if (!step || !step.target) return null;
+    var el = document.querySelector(step.target);
+    if (!el) return null;
+    if (step.climb) el = el.closest(step.climb) || el;
+    return el;
+  }
+
+  function buildOverlay() {
+    block = document.createElement('div');
+    block.className = 'og-block';
+
+    spot = document.createElement('div');
+    spot.className = 'og-spot';
+
+    pop = document.createElement('div');
+    pop.className = 'og-pop';
+    pop.setAttribute('role', 'dialog');
+    pop.setAttribute('aria-live', 'polite');
+
+    document.body.appendChild(block);
+    document.body.appendChild(spot);
+    document.body.appendChild(pop);
+
+    block.style.display = 'none';
+    spot.style.display = 'none';
+    pop.style.display = 'none';
+  }
+
+  function openTour(view, at) {
+    var guide = PAGE_GUIDES[view];
+    if (!guide) return;
+
+    // Make sure we are looking at the page we are about to explain.
+    if (typeof window.switchView === 'function') {
+      var active = document.querySelector('.view.active');
+      if (!active || active.id !== 'view-' + view) window.switchView(view);
+    }
+
+    // Drop any step whose target is not on the page (a table that has not
+    // rendered a row yet, for instance) so the tour never points at nothing.
+    state.steps = guide.tour.map(function (s, idx) {
+      var copy = Object.assign({}, s);
+      copy._at = idx;
+      return copy;
+    }).filter(function (s) { return !s.target || resolve(s); });
+
+    if (!state.steps.length) return;
+
+    state.view = view;
+    state.open = true;
+    // `at` is an index into the original tour array; find the nearest kept step.
+    var start = 0;
+    for (var i = 0; i < state.steps.length; i++) {
+      if (state.steps[i]._at <= at) start = i;
+    }
+    state.i = start;
+
+    block.style.display = '';
+    spot.style.display = '';
+    pop.style.display = '';
+    block.classList.add('show');
+    document.addEventListener('keydown', onKey, true);
+    render();
+    if (raf === null) raf = requestAnimationFrame(loop);
+  }
+
+  function closeTour(completed) {
+    if (!state.open) return;
+    state.open = false;
+    block.classList.remove('show');
+    block.style.display = 'none';
+    spot.style.display = 'none';
+    pop.style.display = 'none';
+    document.removeEventListener('keydown', onKey, true);
+    if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+
+    if (completed && state.view) {
+      set('tour.' + state.view, '1');
+      var btn = document.getElementById('og-btn-' + state.view);
+      if (btn) btn.classList.remove('is-unseen');
+    }
+  }
+
+  function go(n) {
+    if (n < 0 || n >= state.steps.length) return;
+    state.i = n;
+    render();
+  }
+
+  function next() {
+    if (state.i >= state.steps.length - 1) closeTour(true);
+    else go(state.i + 1);
+  }
+
+  function onKey(e) {
+    if (!state.open) return;
+    if (e.key === 'Escape')      { e.stopPropagation(); closeTour(false); }
+    else if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft')                       { e.preventDefault(); go(state.i - 1); }
+  }
+
+  function render() {
+    var step = state.steps[state.i];
+    var total = state.steps.length;
+    var last = state.i === total - 1;
+    var guide = PAGE_GUIDES[state.view];
+
+    var dots = state.steps.map(function (_, i) {
+      return '<button type="button" class="og-dot' + (i === state.i ? ' is-on' : '') +
+             '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>';
+    }).join('');
+
+    pop.innerHTML =
+      '<button type="button" class="og-pop-x" aria-label="Close guide">✕</button>' +
+      '<div class="og-pop-kicker">' + esc(guide.title) + ' · step ' + (state.i + 1) + ' of ' + total + '</div>' +
+      '<div class="og-pop-title">' + esc(step.title) + '</div>' +
+      '<div class="og-pop-body">' + esc(step.body) + '</div>' +
+      '<div class="og-pop-nav">' +
+        '<div class="og-dots">' + dots + '</div>' +
+        (state.i > 0 ? '<button type="button" class="btn btn-ghost btn-sm og-back">Back</button>' : '') +
+        '<button type="button" class="btn btn-sm og-next">' + (last ? 'Done' : 'Next') + '</button>' +
+      '</div>';
+
+    pop.querySelector('.og-pop-x').onclick = function () { closeTour(false); };
+    pop.querySelector('.og-next').onclick = next;
+    var back = pop.querySelector('.og-back');
+    if (back) back.onclick = function () { go(state.i - 1); };
+    pop.querySelectorAll('.og-dot').forEach(function (d) {
+      d.onclick = function () { go(parseInt(d.dataset.i, 10)); };
+    });
+
+    pop.classList.remove('is-enter');
+    void pop.offsetWidth;          // restart the entry animation
+    pop.classList.add('is-enter');
+
+    var el = resolve(step);
+    if (el) el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' });
+    position();
+    pop.querySelector('.og-next').focus({ preventScroll: true });
+  }
+
+  function position() {
+    var el = resolve(state.steps[state.i]);
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var pad = 8, gap = 12;
+    var sx, sy, sw, sh;
+
+    if (el) {
+      var r = el.getBoundingClientRect();
+      sw = Math.min(r.width + pad * 2, vw - 16);
+      sh = Math.min(r.height + pad * 2, vh - 16);
+      sx = Math.max(8, Math.min(r.left - pad, vw - sw - 8));
+      sy = Math.max(8, Math.min(r.top - pad, vh - sh - 8));
+      spot.classList.remove('is-centred');
+    } else {
+      sw = 0; sh = 0; sx = vw / 2; sy = vh / 2;
+      spot.classList.add('is-centred');
+    }
+    spot.style.width = sw + 'px';
+    spot.style.height = sh + 'px';
+    spot.style.left = sx + 'px';
+    spot.style.top = sy + 'px';
+
+    var pr = pop.getBoundingClientRect();
+    var pw = pr.width, ph = pr.height;
+    var top, left, beside = false;
+
+    if (!el) {
+      top = Math.max(12, (vh - ph) / 2);
+      left = Math.max(12, (vw - pw) / 2);
+    } else {
+      if (sy + sh + gap + ph <= vh - 12) {
+        top = sy + sh + gap;                                    // below the target
+      } else if (sy - gap - ph >= 12) {
+        top = sy - gap - ph;                                    // above it
+      } else {
+        top = Math.max(12, Math.min(sy, vh - ph - 12));         // no room either way
+        beside = true;
+      }
+      left = beside
+        ? (sx + sw + gap + pw <= vw - 12 ? sx + sw + gap : Math.max(12, sx - gap - pw))
+        : Math.max(12, Math.min(sx, vw - pw - 12));
+    }
+    pop.style.top = top + 'px';
+    pop.style.left = left + 'px';
+  }
+
+  // Track the target every frame so the spotlight stays glued to it while
+  // the page scrolls, resizes or re-renders underneath.
+  function loop() {
+    if (!state.open) { raf = null; return; }
+    position();
+    raf = requestAnimationFrame(loop);
+  }
+
+  /* ---------------------------------------------------------------
+     Sidebar help block
+     --------------------------------------------------------------- */
+  function buildSidebar() {
+    var sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+    var box = document.createElement('div');
+    box.className = 'og-help';
+    box.innerHTML =
+      '<div class="og-help-t">Guides</div>' +
+      '<button type="button" class="og-help-replay">▶ Replay this page’s guide</button>' +
+      '<button type="button" class="og-help-reset">↺ Reset all guides</button>';
+    sidebar.appendChild(box);
+
+    box.querySelector('.og-help-replay').onclick = function () {
+      var active = document.querySelector('.view.active');
+      if (!active) return;
+      openTour(active.id.replace('view-', ''), 0);
+    };
+    box.querySelector('.og-help-reset').onclick = function () {
+      clearAll();
+      window.location.reload();
+    };
+  }
+
+  /* ---------------------------------------------------------------
+     Init
+     --------------------------------------------------------------- */
+  buildOverlay();
+  Object.keys(PAGE_GUIDES).forEach(function (view) {
+    buildPage(view, PAGE_GUIDES[view]);
+  });
+  buildSidebar();
+
+  // First ever visit: start the walkthrough by itself, the way a newly
+  // installed app does. Only once — after that it is opt-in.
+  if (get('intro') !== '1') {
+    set('intro', '1');
+    setTimeout(function () { openTour('dashboard', 0); }, 800);
+  }
+
+  // Exposed so the guide content can be lifted straight into the
+  // Supabase build, and so a page can trigger its own tour.
+  window.OD_GUIDES = PAGE_GUIDES;
+  window.odOpenGuide = openTour;
+})();
 </script>
 
 </body>
