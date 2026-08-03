@@ -1161,7 +1161,11 @@
   }
   .og-pop.is-enter { animation: og-pop-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1); }
   @keyframes og-pop-in { from { opacity: 0; transform: translateY(6px) scale(0.98); } }
-  .og-pop-kicker { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--accent); font-weight: 800; }
+  .og-pop-kicker {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.6px;
+    color: var(--accent); font-weight: 800;
+    padding-right: 22px;   /* clear the ✕ button */
+  }
   .og-pop-title { font-size: 15.5px; font-weight: 700; margin: 5px 0 6px; letter-spacing: -0.2px; }
   .og-pop-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
   .og-pop-nav { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
@@ -6792,6 +6796,78 @@ tkRender();
   };
 
   /* ---------------------------------------------------------------
+     THE FULL DEMO — one continuous run across all ten pages.
+     The per-page guides above explain a page you are already on;
+     this walks a newcomer through the whole app in workflow order,
+     switching pages as it goes. Each step names the page it needs.
+     --------------------------------------------------------------- */
+  var DEMO = [
+    { view: 'dashboard', target: null,
+      title: 'Welcome to the Operations Director engine',
+      body: 'Two minutes, fourteen stops. This walks the whole app in the order you actually use it — plan, review, publish, measure, then win the work. Use Next and Back, or the arrow keys. Esc stops at any point.' },
+
+    { view: 'dashboard', target: '.sidebar .nav',
+      title: 'Ten pages, in working order',
+      body: 'Top half plans and publishes the content. Bottom half wins the clients. You will visit every one of these in the next two minutes.' },
+
+    { view: 'dashboard', target: '#view-dashboard .grid-4',
+      title: 'Start every day here',
+      body: 'Four numbers that roll up the whole 30-day plan. If they look right, the engine is running and you have nothing to do.' },
+
+    { view: 'dashboard', target: '#kpi-review', climb: '.card',
+      title: 'The one number that needs a human',
+      body: 'Drafts written but not signed off. While this is above zero, nothing new goes out — so this is the number that tells you where to go next.' },
+
+    { view: 'pillars', target: '#master-prompt-block',
+      title: 'Where every post comes from',
+      body: 'Nothing here is written by hand. This one prompt generates all thirty posts — which means you change the voice of the whole launch by editing this block, not by rewriting thirty drafts.' },
+
+    { view: 'pillars', target: '#pillars-grid',
+      title: 'Four pillars, one framework',
+      body: 'Pain, Proof, Product, Philosophy. Each reuses the master prompt and varies a single step. That is what keeps thirty posts sounding like one person rather than four.' },
+
+    { view: 'channels', target: '#view-channels .grid-2 > .card:nth-child(1)',
+      title: 'One channel, driven to green',
+      body: 'LinkedIn posts daily; everything else only recycles what LinkedIn has already proven. Getting one channel working beats being mediocre on five — that discipline is built into the plan rather than left to willpower.' },
+
+    { view: 'calendar', target: '#calendar-grid .cal-day:not(.empty)',
+      title: 'Thirty days, planned in advance',
+      body: 'One square per day, coloured by pillar. Click any square to read the full draft, the SEO meta and the channels it goes to. Nothing is written the morning it goes out.' },
+
+    { view: 'queue', target: '#queue-body tr:first-child',
+      title: 'Your actual daily job',
+      body: 'The AI drafts; you decide. Read the hook, then approve it or send it back with a comment. Clearing this list is the whole of your involvement in content.' },
+
+    { view: 'buffer', target: '#buffer-body', climb: '.card',
+      title: 'Approved posts leave here',
+      body: 'Sign-off pushes posts into Buffer, and Buffer reports scheduling and publish status back into this table. This is the only page that talks to the outside world.' },
+
+    { view: 'measure', target: '#view-measure .grid-4 > .card:nth-child(3)',
+      title: 'The number that pays',
+      body: 'Impressions and profile visits tell you the content is landing. Calendar bookings tell you it is working. Every post carries a UTM tag, so each booking traces back to the exact post that caused it.' },
+
+    { view: 'outreach', target: '#od-t1', climb: '.card',
+      title: 'The other half — outreach',
+      body: 'Content brings people to you; outreach goes and gets them. Seven touches over eighteen days, starting with a comment on their post rather than a pitch. Every message is already written for you.' },
+
+    { view: 'tracker', target: '#tk-signal', climb: '.card',
+      title: 'The rule that stops it being spam',
+      body: 'You cannot add a prospect without one real thing you saw them post. No signal, no row. That single rule is the difference between outreach that gets replies and outreach that gets your page blocked.' },
+
+    { view: 'tracker', target: '#tk-mb-out', climb: '.card',
+      title: 'It writes the message for you',
+      body: 'Pick the person and which of the seven steps you are on. It builds the message with their name and their real signal already in it. You copy, paste and send by hand — the app never sends anything itself.' },
+
+    { view: 'comparison', target: '#view-comparison .cmp-pick',
+      title: 'And when they are ready to choose',
+      body: 'Decision-stage pages comparing the four honest options, including when a VA or a hire genuinely is the better answer. That honesty is what makes them convert.' },
+
+    { view: 'dashboard', target: null,
+      title: 'That is the whole thing',
+      body: 'Plan, review, publish, measure, then win the work. Every page has its own Guide button in the top-right corner if you want the detail, and you can replay this demo any time from the Guides box in the sidebar.' }
+  ];
+
+  /* ---------------------------------------------------------------
      Storage (never throws — private mode, blocked cookies, etc.)
      --------------------------------------------------------------- */
   var PREFIX = 'og.';
@@ -6909,7 +6985,20 @@ tkRender();
      Tour engine
      --------------------------------------------------------------- */
   var block, spot, pop, raf = null;
-  var state = { view: null, steps: [], i: 0, open: false };
+  var state = { view: null, steps: [], i: 0, open: false, demo: false };
+
+  function activeView() {
+    var el = document.querySelector('.view.active');
+    return el ? el.id.replace('view-', '') : 'dashboard';
+  }
+
+  // A step may name the page it needs. Switch to it before measuring
+  // anything — a hidden element has no position to spotlight.
+  function ensureView(step) {
+    if (step && step.view && activeView() !== step.view && typeof window.switchView === 'function') {
+      window.switchView(step.view);
+    }
+  }
 
   function resolve(step) {
     if (!step || !step.target) return null;
@@ -6968,7 +7057,35 @@ tkRender();
       if (state.steps[i]._at <= at) start = i;
     }
     state.i = start;
+    state.demo = false;
+    start_();
+  }
 
+  // The full walkthrough. Targets live on pages we are not currently on,
+  // so the "does this element exist" pass has to visit each page as it
+  // goes — cheap, and it happens before the overlay is shown.
+  function openDemo() {
+    var here = activeView();
+    state.steps = DEMO.map(function (s, idx) {
+      var copy = Object.assign({}, s);
+      copy._at = idx;
+      return copy;
+    }).filter(function (s) {
+      if (!s.target) return true;
+      ensureView(s);
+      return !!resolve(s);
+    });
+    if (typeof window.switchView === 'function') window.switchView(here);
+
+    if (!state.steps.length) return;
+    state.view = null;
+    state.i = 0;
+    state.demo = true;
+    start_();
+  }
+
+  function start_() {
+    state.open = true;
     block.style.display = '';
     spot.style.display = '';
     pop.style.display = '';
@@ -6988,7 +7105,10 @@ tkRender();
     document.removeEventListener('keydown', onKey, true);
     if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
 
-    if (completed && state.view) {
+    if (!completed) return;
+    if (state.demo) {
+      set('demo', '1');
+    } else if (state.view) {
       set('tour.' + state.view, '1');
       var btn = document.getElementById('og-btn-' + state.view);
       if (btn) btn.classList.remove('is-unseen');
@@ -7017,7 +7137,14 @@ tkRender();
     var step = state.steps[state.i];
     var total = state.steps.length;
     var last = state.i === total - 1;
-    var guide = PAGE_GUIDES[state.view];
+
+    // In the full demo each step may live on a different page.
+    ensureView(step);
+
+    var pageTitle = (PAGE_GUIDES[state.demo ? step.view : state.view] || {}).title || '';
+    var kicker = state.demo
+      ? 'Full walkthrough · ' + (state.i + 1) + ' of ' + total + (pageTitle ? ' · ' + pageTitle : '')
+      : pageTitle + ' · step ' + (state.i + 1) + ' of ' + total;
 
     var dots = state.steps.map(function (_, i) {
       return '<button type="button" class="og-dot' + (i === state.i ? ' is-on' : '') +
@@ -7026,7 +7153,7 @@ tkRender();
 
     pop.innerHTML =
       '<button type="button" class="og-pop-x" aria-label="Close guide">✕</button>' +
-      '<div class="og-pop-kicker">' + esc(guide.title) + ' · step ' + (state.i + 1) + ' of ' + total + '</div>' +
+      '<div class="og-pop-kicker">' + esc(kicker) + '</div>' +
       '<div class="og-pop-title">' + esc(step.title) + '</div>' +
       '<div class="og-pop-body">' + esc(step.body) + '</div>' +
       '<div class="og-pop-nav">' +
@@ -7117,9 +7244,12 @@ tkRender();
     box.className = 'og-help';
     box.innerHTML =
       '<div class="og-help-t">Guides</div>' +
-      '<button type="button" class="og-help-replay">▶ Replay this page’s guide</button>' +
+      '<button type="button" class="og-help-demo">▶ Take the full demo · 2 min</button>' +
+      '<button type="button" class="og-help-replay">↻ Replay this page’s guide</button>' +
       '<button type="button" class="og-help-reset">↺ Reset all guides</button>';
     sidebar.appendChild(box);
+
+    box.querySelector('.og-help-demo').onclick = function () { openDemo(); };
 
     box.querySelector('.og-help-replay').onclick = function () {
       var active = document.querySelector('.view.active');
@@ -7141,17 +7271,20 @@ tkRender();
   });
   buildSidebar();
 
-  // First ever visit: start the walkthrough by itself, the way a newly
-  // installed app does. Only once — after that it is opt-in.
+  // First ever visit: run the full walkthrough by itself, the way a newly
+  // installed app does. Only once — after that it is opt-in from the
+  // sidebar, and each page still has its own Guide button.
   if (get('intro') !== '1') {
     set('intro', '1');
-    setTimeout(function () { openTour('dashboard', 0); }, 800);
+    setTimeout(openDemo, 800);
   }
 
   // Exposed so the guide content can be lifted straight into the
   // Supabase build, and so a page can trigger its own tour.
   window.OD_GUIDES = PAGE_GUIDES;
+  window.OD_DEMO = DEMO;
   window.odOpenGuide = openTour;
+  window.odOpenDemo = openDemo;
 })();
 </script>
 
